@@ -1,0 +1,31 @@
+stages:
+  - test
+  - qa-audit
+
+variables:
+  POSTGRES_DB: odoo19_test
+  POSTGRES_USER: odoo
+  POSTGRES_PASSWORD: odoo
+  POSTGRES_HOST_AUTH_METHOD: trust
+
+qa_audit_job:
+  stage: qa-audit
+  image: odoo:19.0
+  services:
+    - name: postgres:16
+      alias: db
+  variables:
+    HOST: db
+    USER: odoo
+    PASSWORD: odoo
+  before_script:
+    - pip install openpyxl ofxparse xlsxwriter chardet requests
+  script:
+    - python3 audit_tooling/generate_dataset.py
+    - python3 audit_tooling/run_all_qa_audit.py
+  artifacts:
+    when: always
+    reports:
+      junit: audit_tooling/qa_audit_report.xml
+    paths:
+      - audit_tooling/qa_audit_report.xml

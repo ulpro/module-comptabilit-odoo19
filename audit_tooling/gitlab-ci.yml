@@ -1,0 +1,36 @@
+stages:
+  - lint
+  - test_unit
+  - test_functional
+
+variables:
+  POSTGRES_DB: postgres
+  POSTGRES_USER: odoo
+  POSTGRES_PASSWORD: odoo
+  POSTGRES_HOST_AUTH_METHOD: trust
+
+default:
+  image: odoo:19.0
+  services:
+    - postgres:16
+
+before_script:
+  - pip3 install --no-cache-dir --break-system-packages -r requirements.txt flake8
+  - mkdir -p /mnt/extra-addons
+  - cp -r * /mnt/extra-addons/ 2>/dev/null || true
+
+static_analysis:
+  stage: lint
+  script:
+    - python3 audit_tooling/static_analyzer.py
+    - flake8 /mnt/extra-addons --count --select=E9,F63,F7,F82 --show-source --statistics
+
+unit_tests_suite:
+  stage: test_unit
+  script:
+    - python3 audit_tooling/run_all_tests.py
+
+functional_tests_deep:
+  stage: test_functional
+  script:
+    - python3 audit_tooling/targeted_audit.py

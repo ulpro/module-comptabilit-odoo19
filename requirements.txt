@@ -1,0 +1,6 @@
+# Dépendances Python requises par la suite om_account_accountant
+openpyxl>=3.0.0
+ofxparse>=0.21
+xlsxwriter>=3.0.0
+chardet>=4.0.0
+requests>=2.25.0

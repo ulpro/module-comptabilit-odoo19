@@ -1,0 +1,6 @@
+.git
+.agents
+.gemini
+**/__pycache__
+**/*.pyc
+**/*.pyo
