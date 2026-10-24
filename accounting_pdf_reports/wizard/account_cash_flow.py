@@ -7,18 +7,18 @@ class AccountCashFlowReport(models.TransientModel):
     _inherit = 'account.common.report'
     _description = 'Cash Flow Statement'
 
-    date_from = fields.Date(string='Start Date', required=True, default=lambda self: self._default_date_from())
-    date_to = fields.Date(string='End Date', required=True, default=lambda self: self._default_date_to())
+    date_from = fields.Date(string='Date de début', required=True, default=lambda self: self._default_date_from())
+    date_to = fields.Date(string='Date de fin', required=True, default=lambda self: self._default_date_to())
     journal_ids = fields.Many2many(
         'account.journal', 'account_cash_flow_report_journal_rel', 'report_id', 'journal_id',
-        string='Journals', required=True,
+        string='Journaux', required=True,
         # 'child_of': the journals of the company and of the branches it consolidates
         default=lambda self: self.env['account.journal'].search([('company_id', 'child_of', self.env.company.id)]),
         domain="[('company_id', 'child_of', company_id)]",
     )
     display_detail = fields.Selection(
-        [('summary', 'Summary'), ('accounts', 'Detail by Account')],
-        string='Display', required=True, default='summary',
+        [('summary', 'Synthèse'), ('accounts', 'Détail par compte')],
+        string='Affichage', required=True, default='summary',
     )
 
     @api.model

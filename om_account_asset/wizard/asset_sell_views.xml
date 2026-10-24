@@ -5,7 +5,7 @@
         <field name="name">asset.sell.form</field>
         <field name="model">asset.sell</field>
         <field name="arch" type="xml">
-            <form string="Sell or Dispose">
+            <form string="Cession ou Mise au rebut">
                 <field name="asset_id" invisible="1"/>
                 <field name="asset_state" invisible="1"/>
                 <field name="company_id" invisible="1"/>
@@ -17,8 +17,8 @@
                         <field name="book_value"/>
                     </group>
                     <group>
-                        <field name="account_asset_gain_id" required="action == 'sell'"/>
-                        <field name="account_asset_loss_id" required="1"/>
+                        <field name="account_asset_gain_id" string="Compte de plus-value" required="action == 'sell'"/>
+                        <field name="account_asset_loss_id" string="Compte de moins-value" required="1"/>
                     </group>
                 </group>
                 <group invisible="action != 'sell'">
@@ -27,16 +27,16 @@
                     <field name="sale_amount"/>
                 </group>
                 <group>
-                    <field name="note" placeholder="Why is the asset sold or disposed of?"/>
+                    <field name="note" placeholder="Motif de la cession ou de la mise au rebut..."/>
                 </group>
                 <p class="text-muted">
-                    The asset is depreciated up to the date, then a draft entry removes its gross
-                    value and the depreciation recorded so far and books the difference with the
-                    sale price as a gain or a loss.
+                    L'actif est amorti jusqu'à cette date, puis une écriture supprime sa valeur brute
+                    ainsi que les amortissements cumulés et comptabilise la différence avec le prix de vente
+                    en plus-value ou moins-value de cession.
                 </p>
                 <footer>
-                    <button name="action_confirm" string="Confirm" type="object" class="btn-primary"/>
-                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    <button name="action_confirm" string="Confirmer" type="object" class="btn-primary"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel"/>
                 </footer>
             </form>
         </field>

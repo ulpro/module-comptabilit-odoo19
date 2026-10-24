@@ -218,7 +218,7 @@ export class OmBankReconciliation extends Component {
         }
         const writeoff = this.state.itemWriteoff;
         if (writeoff.enabled && !this.itemWriteoffReady) {
-            this.notification.add(_t("Choose the account and the journal of the write-off."), {
+            this.notification.add(_t("Choisissez le compte et le journal de la contrepartie."), {
                 type: "warning",
             });
             return;
@@ -241,7 +241,7 @@ export class OmBankReconciliation extends Component {
                 journal_id: false,
                 label: "",
             };
-            this.notification.add(_t("The journal items are reconciled."), { type: "success" });
+            this.notification.add(_t("Les écritures comptables sont lettrées avec succès."), { type: "success" });
             const group = this.state.selectedGroup;
             await this.loadGroups();
             const still = this.state.groups.find((candidate) => this.sameGroup(candidate, group));
@@ -493,8 +493,8 @@ export class OmBankReconciliation extends Component {
             );
             this.notification.add(
                 count
-                    ? _t("%s transaction(s) reconciled automatically.", count)
-                    : _t("No transaction could be reconciled automatically."),
+                    ? _t("%s transaction(s) rapprochée(s) automatiquement.", count)
+                    : _t("Aucune transaction n'a pu être rapprochée automatiquement."),
                 { type: count ? "success" : "info" }
             );
         } finally {
@@ -534,7 +534,7 @@ export class OmBankReconciliation extends Component {
             const value = parseFloat(ev.target.value);
             match.amount = value ? Math.abs(value) : null;
         } catch {
-            this.notification.add(_t("This amount is not a number."), { type: "danger" });
+            this.notification.add(_t("Ce montant n'est pas un nombre valide."), { type: "danger" });
             return;
         }
         await this.refreshPreview();
@@ -568,18 +568,18 @@ export class OmBankReconciliation extends Component {
         try {
             this.state.writeoff.amount = Math.abs(parseFloat(ev.target.value));
         } catch {
-            this.notification.add(_t("This amount is not a number."), { type: "danger" });
+            this.notification.add(_t("Ce montant n'est pas un nombre valide."), { type: "danger" });
         }
     }
 
     async addWriteoff() {
         const writeoff = this.state.writeoff;
         if (!writeoff.account_id) {
-            this.notification.add(_t("Choose the account of the counterpart."), { type: "warning" });
+            this.notification.add(_t("Choisissez le compte de la contrepartie."), { type: "warning" });
             return;
         }
         if (!writeoff.amount) {
-            this.notification.add(_t("The amount of the counterpart cannot be zero."), { type: "warning" });
+            this.notification.add(_t("Le montant de la contrepartie ne peut pas être zéro."), { type: "warning" });
             return;
         }
         // the counterpart takes the direction of what is left to cover (a debit for money going out)
@@ -605,7 +605,7 @@ export class OmBankReconciliation extends Component {
             [[this.transaction.id], model.id, this.serializedProposal()]
         );
         if (!writeoffs.length) {
-            this.notification.add(_t("The model %s has nothing to add here.", model.name), { type: "info" });
+            this.notification.add(_t("Le modèle %s n'a rien à ajouter ici.", model.name), { type: "info" });
             return;
         }
         this.state.proposal.writeoffs.push(...writeoffs);

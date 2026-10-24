@@ -10,16 +10,16 @@
         <field name="arch" type="xml">
             <list string="Transactions" decoration-muted="is_reconciled" default_order="date desc, id desc">
                 <field name="date"/>
-                <field name="payment_ref"/>
-                <field name="partner_id"/>
-                <field name="statement_id" optional="show"/>
-                <field name="journal_id" optional="hide"/>
+                <field name="payment_ref" string="Libellé"/>
+                <field name="partner_id" string="Partenaire"/>
+                <field name="statement_id" string="Relevé" optional="show"/>
+                <field name="journal_id" string="Journal" optional="hide"/>
                 <field name="company_id" groups="base.group_multi_company" optional="hide"/>
                 <field name="currency_id" column_invisible="True"/>
-                <field name="amount" sum="Total"/>
+                <field name="amount" sum="Total" string="Montant"/>
                 <field name="running_balance" optional="hide"/>
-                <field name="checked" string="Reviewed" widget="boolean" optional="show" readonly="1"/>
-                <field name="is_reconciled" string="Reconciled" widget="boolean" optional="show"/>
+                <field name="checked" string="Révisé" widget="boolean" optional="show" readonly="1"/>
+                <field name="is_reconciled" string="Rapproché" widget="boolean" optional="show"/>
             </list>
         </field>
     </record>
@@ -29,21 +29,21 @@
         <field name="model">account.bank.statement.line</field>
         <field name="arch" type="xml">
             <search string="Transactions">
-                <field name="payment_ref"/>
-                <field name="partner_id"/>
-                <field name="amount"/>
-                <field name="journal_id"/>
-                <field name="statement_id"/>
-                <filter name="to_reconcile" string="To Reconcile" domain="[('is_reconciled', '=', False)]"/>
-                <filter name="reconciled" string="Reconciled" domain="[('is_reconciled', '=', True)]"/>
+                <field name="payment_ref" string="Libellé"/>
+                <field name="partner_id" string="Partenaire"/>
+                <field name="amount" string="Montant"/>
+                <field name="journal_id" string="Journal"/>
+                <field name="statement_id" string="Relevé"/>
+                <filter name="to_reconcile" string="À rapprocher" domain="[('is_reconciled', '=', False)]"/>
+                <filter name="reconciled" string="Rapproché" domain="[('is_reconciled', '=', True)]"/>
                 <separator/>
-                <filter name="to_review" string="To Check"
+                <filter name="to_review" string="À vérifier"
                         domain="[('move_id.state', '=', 'posted'), ('move_id.checked', '=', False)]"/>
                 <separator/>
                 <filter name="date" string="Date" date="date"/>
                 <group>
                     <filter name="group_by_journal" string="Journal" context="{'group_by': 'journal_id'}"/>
-                    <filter name="group_by_statement" string="Statement" context="{'group_by': 'statement_id'}"/>
+                    <filter name="group_by_statement" string="Relevé" context="{'group_by': 'statement_id'}"/>
                     <filter name="group_by_date" string="Date" context="{'group_by': 'date'}"/>
                 </group>
             </search>
@@ -56,35 +56,35 @@
         <field name="arch" type="xml">
             <form string="Transaction">
                 <header>
-                    <button name="om_action_reconcile" type="object" string="Reconcile" class="btn-primary"
+                    <button name="om_action_reconcile" type="object" string="Rapprocher" class="btn-primary"
                             invisible="not id or is_reconciled" groups="account.group_account_basic"/>
                 </header>
                 <sheet>
-                    <widget name="web_ribbon" title="Reconciled" invisible="not is_reconciled"/>
+                    <widget name="web_ribbon" title="Rapproché" invisible="not is_reconciled"/>
                     <field name="is_reconciled" invisible="1"/>
                     <field name="company_id" invisible="1"/>
                     <field name="currency_id" invisible="1"/>
                     <group>
                         <group>
                             <field name="journal_id" readonly="id" options="{'no_create': True}"
-                                   domain="[('type', 'in', ('bank', 'cash', 'credit'))]"/>
+                                    domain="[('type', 'in', ('bank', 'cash', 'credit'))]"/>
                             <field name="date" readonly="is_reconciled"/>
-                            <field name="payment_ref" string="Label" required="1" placeholder="e.g. Office supplies"/>
+                            <field name="payment_ref" string="Libellé" required="1" placeholder="Ex. Fournitures de bureau"/>
                             <field name="partner_id" readonly="is_reconciled"/>
                         </group>
                         <group>
                             <field name="amount" readonly="is_reconciled"
-                                   help="Positive for money received, negative for money spent."/>
+                                   help="Positif pour l'argent reçu, négatif pour l'argent dépensé."/>
                             <field name="foreign_currency_id" groups="base.group_multi_currency"
                                    readonly="is_reconciled" options="{'no_create': True}"/>
                             <field name="amount_currency" groups="base.group_multi_currency"
                                    invisible="not foreign_currency_id" readonly="is_reconciled"/>
                             <field name="statement_id" domain="[('journal_id', '=', journal_id)]"
                                    options="{'no_create': True}"/>
-                            <field name="ref" string="Reference"/>
+                            <field name="ref" string="Référence"/>
                         </group>
                     </group>
-                    <field name="narration" placeholder="Notes"/>
+                    <field name="narration" placeholder="Notes..."/>
                 </sheet>
             </form>
         </field>
@@ -96,8 +96,8 @@
         <field name="view_mode">list,form</field>
         <field name="search_view_id" ref="view_bank_statement_line_search"/>
         <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">Add a transaction</p>
-            <p>The money received and spent on the account, as the bank statement or the cash count shows it.</p>
+            <p class="o_view_nocontent_smiling_face">Ajouter une transaction</p>
+            <p>L'argent reçu et dépensé sur le compte, tel qu'indiqué sur le relevé de banque ou le comptage de caisse.</p>
         </field>
     </record>
 
@@ -105,32 +105,31 @@
         <field name="name">account.bank.statement.form.om.account.reconcile</field>
         <field name="model">account.bank.statement</field>
         <field name="arch" type="xml">
-            <form string="Statement">
+            <form string="Relevé bancaire">
                 <sheet>
                     <field name="currency_id" invisible="1"/>
                     <field name="company_id" invisible="1"/>
                     <field name="is_valid" invisible="1"/>
                     <div class="alert alert-warning" role="alert" invisible="is_complete or not line_ids">
-                        The closing balance does not match the opening balance and the transactions: check the
-                        amounts, or a transaction is missing.
+                        Le solde final ne correspond pas au solde initial additionné des transactions : vérifiez les montants, ou une transaction est manquante.
                     </div>
                     <div class="alert alert-danger" role="alert" invisible="is_valid or not id">
-                        The opening balance differs from the closing balance of the previous statement.
+                        Le solde initial diffère du solde final du relevé précédent.
                     </div>
                     <div class="oe_title">
-                        <label for="name" string="Statement"/>
-                        <h1><field name="name" placeholder="e.g. Cash of 16 September"/></h1>
+                        <label for="name" string="Relevé"/>
+                        <h1><field name="name" placeholder="Ex. Caisse du 16 septembre"/></h1>
                     </div>
                     <group>
                         <group>
                             <field name="journal_id" readonly="1" force_save="1"/>
                             <field name="date"/>
-                            <field name="reference"/>
+                            <field name="reference" string="Référence externe"/>
                         </group>
                         <group>
-                            <field name="balance_start"/>
-                            <field name="balance_end" string="Computed Balance"/>
-                            <field name="balance_end_real" string="Closing Balance"/>
+                            <field name="balance_start" string="Solde initial"/>
+                            <field name="balance_end" string="Solde calculé"/>
+                            <field name="balance_end_real" string="Solde final"/>
                             <field name="is_complete" invisible="1"/>
                         </group>
                     </group>
@@ -139,12 +138,12 @@
                         <list editable="bottom" decoration-muted="is_reconciled">
                             <field name="journal_id" column_invisible="True"/>
                             <field name="date"/>
-                            <field name="payment_ref" string="Label" required="1"/>
-                            <field name="partner_id" readonly="is_reconciled"/>
-                            <field name="ref" string="Reference" optional="hide"/>
+                            <field name="payment_ref" string="Libellé" required="1"/>
+                            <field name="partner_id" string="Partenaire" readonly="is_reconciled"/>
+                            <field name="ref" string="Référence" optional="hide"/>
                             <field name="currency_id" column_invisible="True"/>
-                            <field name="amount" sum="Total" readonly="is_reconciled"/>
-                            <field name="is_reconciled" string="Reconciled" widget="boolean" optional="show"/>
+                            <field name="amount" sum="Total" string="Montant" readonly="is_reconciled"/>
+                            <field name="is_reconciled" string="Rapproché" widget="boolean" optional="show"/>
                         </list>
                     </field>
                 </sheet>

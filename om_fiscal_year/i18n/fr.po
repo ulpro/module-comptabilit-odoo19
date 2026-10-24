@@ -245,6 +245,7 @@ msgid "Save"
 msgstr "Sauvegarder"
 
 #. module: om_fiscal_year
+#. odoo-python
 #: code:addons/om_fiscal_year/models/res_company.py:0
 #, python-format
 msgid "Show unposted entries"
@@ -266,12 +267,14 @@ msgid "Tax Lock Date"
 msgstr "Date de verrouillage de la taxe"
 
 #. module: om_fiscal_year
+#. odoo-python
 #: code:addons/om_fiscal_year/models/account_fiscal_year.py:0
 #, python-format
 msgid "The ending date must not be prior to the starting date."
 msgstr "La date de fin ne peut être antérieure à la date de début."
 
 #. module: om_fiscal_year
+#. odoo-python
 #: code:addons/om_fiscal_year/models/res_company.py:0
 #, python-format
 msgid ""
@@ -282,6 +285,7 @@ msgstr ""
 "souhaitez verrouiller. Vous devez les comptabiliser ou les supprimer."
 
 #. module: om_fiscal_year
+#. odoo-python
 #: code:addons/om_fiscal_year/models/res_company.py:0
 #, python-format
 msgid ""
@@ -293,12 +297,14 @@ msgstr ""
 "supprimer."
 
 #. module: om_fiscal_year
+#. odoo-python
 #: code:addons/om_fiscal_year/wizard/change_lock_date.py:0
 #, python-format
 msgid "You Are Not Allowed To Perform This Operation"
 msgstr "Vous n’êtes pas autorisé à effectuer cette opération"
 
 #. module: om_fiscal_year
+#. odoo-python
 #: code:addons/om_fiscal_year/models/account_fiscal_year.py:0
 #, python-format
 msgid ""
@@ -307,3 +313,111 @@ msgid ""
 msgstr ""
 "Vous ne pouvez pas avoir de chevauchement entre deux exercices, veuillez "
 "corriger les dates de début et/ou de fin de vos exercices."
+
+#. module: om_fiscal_year
+#: model_terms:ir.ui.view,arch_db:om_fiscal_year.view_account_fiscal_year_closing_form
+msgid "Close Fiscal Year"
+msgstr "Clôturer l'exercice fiscal"
+
+#. module: om_fiscal_year
+#: model_terms:ir.ui.view,arch_db:om_fiscal_year.view_account_fiscal_year_closing_form
+msgid "Closing Entry"
+msgstr "Écriture de clôture"
+
+#. module: om_fiscal_year
+#: model_terms:ir.ui.view,arch_db:om_fiscal_year.view_account_fiscal_year_closing_form
+msgid "Checklist"
+msgstr "Contrôles préalables"
+
+#. module: om_fiscal_year
+#: model_terms:ir.ui.view,arch_db:om_fiscal_year.view_account_fiscal_year_closing_form
+msgid "Draft entries"
+msgstr "Pièces en brouillon"
+
+#. module: om_fiscal_year
+#: model_terms:ir.ui.view,arch_db:om_fiscal_year.view_account_fiscal_year_closing_form
+msgid "Unreconciled bank transactions"
+msgstr "Transactions bancaires non rapprochées"
+
+#. module: om_fiscal_year
+#: model:ir.model.fields,field_description:om_fiscal_year.field_account_fiscal_year_closing__lock
+msgid "Lock the Fiscal Year"
+msgstr "Verrouiller l'exercice fiscal"
+
+#. module: om_fiscal_year
+#: model:ir.model.fields,field_description:om_fiscal_year.field_account_fiscal_year_closing__fiscal_year_id
+msgid "Fiscal Year"
+msgstr "Exercice fiscal"
+
+#. module: om_fiscal_year
+#: model:ir.model.fields,field_description:om_fiscal_year.field_account_fiscal_year_closing__earnings
+msgid "Earnings to Transfer"
+msgstr "Résultat à transférer"
+
+#. module: om_fiscal_year
+#: model:ir.model.fields,field_description:om_fiscal_year.field_account_fiscal_year_closing__unaffected_earnings_account_id
+msgid "Transfer From"
+msgstr "Transférer depuis"
+
+#. module: om_fiscal_year
+#: model:ir.model.fields,field_description:om_fiscal_year.field_account_fiscal_year_closing__retained_earnings_account_id
+msgid "Retained Earnings Account"
+msgstr "Compte de report à nouveau"
+
+#. module: om_fiscal_year
+#: model:ir.model.fields,field_description:om_fiscal_year.field_account_fiscal_year_closing__date
+msgid "Closing Entry Date"
+msgstr "Date de l'écriture de clôture"
+
+#. module: om_fiscal_year
+#. odoo-python
+#: code:addons/om_fiscal_year/models/account_fiscal_year.py:0
+#, python-format
+msgid "Reconcile the bank statement lines of the fiscal year before locking it."
+msgstr "Rapprochez les lignes de relevé bancaire de l'exercice avant de le verrouiller."
+
+#. module: om_fiscal_year
+#. odoo-python
+#: code:addons/om_fiscal_year/models/account_fiscal_year.py:0
+#, python-format
+msgid "Post or delete the draft journal entries of the fiscal year first."
+msgstr "Comptabilisez ou supprimez d'abord les pièces comptables en brouillon de l'exercice."
+
+#. module: om_fiscal_year
+#. odoo-python
+#: code:addons/om_fiscal_year/models/account_fiscal_year.py:0
+#, python-format
+msgid "The fiscal year %s is already closed."
+msgstr "L'exercice fiscal %s est déjà clôturé."
+
+#. module: om_fiscal_year
+#. odoo-python
+#: code:addons/om_fiscal_year/models/account_fiscal_year.py:0
+#, python-format
+msgid "Only accounting administrators can close or reopen a fiscal year."
+msgstr "Seuls les administrateurs comptables peuvent clôturer ou rouvrir un exercice fiscal."
+
+#. module: om_fiscal_year
+#. odoo-python
+#: code:addons/om_fiscal_year/models/account_fiscal_year.py:0
+#, python-format
+msgid "Year-end closing %s"
+msgstr "Clôture annuelle %s"
+
+#. module: om_fiscal_year
+#. odoo-python
+#: code:addons/om_fiscal_year/models/account_fiscal_year.py:0
+#, python-format
+msgid "Reopening of %s"
+msgstr "Réouverture de %s"
+
+#. module: om_fiscal_year
+#. odoo-python
+#: code:addons/om_fiscal_year/models/account_move.py:0
+#, python-format
+msgid "This entry closes the fiscal year %s. Reopen the fiscal year instead of changing it."
+msgstr "Cette pièce clôture l'exercice fiscal %s. Rouvrez l'exercice fiscal au lieu de la modifier."
+
+
+
+

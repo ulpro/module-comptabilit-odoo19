@@ -12,24 +12,23 @@ class AssetSell(models.TransientModel):
     company_id = fields.Many2one(related='asset_id.company_id')
     currency_id = fields.Many2one(related='company_id.currency_id')
     action = fields.Selection(
-        [('sell', 'Sell'), ('dispose', 'Dispose')],
+        [('sell', 'Vendre / Céder'), ('dispose', 'Mettre au rebut')],
         string='Action', required=True, default='sell',
     )
     date = fields.Date(string='Date', required=True, default=fields.Date.context_today)
-    note = fields.Text(string='Reason')
+    note = fields.Text(string='Motif')
     sale_invoice_ids = fields.Many2many(
-        'account.move', string='Customer Invoices',
+        'account.move', string='Factures clients de vente',
         domain="[('move_type', '=', 'out_invoice'), ('state', '=', 'posted'),"
                " ('company_id', '=', company_id)]",
-        help="Invoices recording the sale of this asset. Their product lines give the "
-             "sale price the gain or the loss is computed from.",
+        help="Factures constatant la vente de cet actif.",
     )
-    sale_amount = fields.Monetary(string='Sale Price', compute='_compute_sale_amount')
-    book_value = fields.Monetary(related='asset_id.book_value', string='Book Value Today')
+    sale_amount = fields.Monetary(string='Prix de vente', compute='_compute_sale_amount')
+    book_value = fields.Monetary(related='asset_id.book_value', string='Valeur nette comptable (VNC)')
     account_asset_gain_id = fields.Many2one(
-        related='asset_id.category_id.account_asset_gain_id', readonly=False)
+        related='asset_id.category_id.account_asset_gain_id', readonly=False, string='Compte de gain')
     account_asset_loss_id = fields.Many2one(
-        related='asset_id.category_id.account_asset_loss_id', readonly=False)
+        related='asset_id.category_id.account_asset_loss_id', readonly=False, string='Compte de perte')
 
     @api.model
     def default_get(self, fields_list):

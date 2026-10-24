@@ -16,32 +16,32 @@ class CurrencyRevaluation(models.TransientModel):
     company_id = fields.Many2one('res.company', required=True, default=lambda self: self.env.company)
     company_currency_id = fields.Many2one(related='company_id.currency_id')
     date = fields.Date(
-        string='Revaluation Date', required=True, default=fields.Date.context_today,
+        string='Date de réévaluation', required=True, default=fields.Date.context_today,
         help="The open balances are revalued at the rate of this date, usually the last day of a period.")
     currency_ids = fields.Many2many(
-        'res.currency', string='Currencies',
+        'res.currency', string='Devises',
         help="Leave empty to revalue every currency other than the one of the company.")
     journal_id = fields.Many2one(
         'account.journal', string='Journal', required=True, check_company=True,
         compute='_compute_from_company', store=True, readonly=False, precompute=True,
         domain="[('type', '=', 'general')]")
     gain_account_id = fields.Many2one(
-        'account.account', string='Unrealized Gain Account', required=True, check_company=True,
+        'account.account', string='Compte de gain latent', required=True, check_company=True,
         compute='_compute_from_company', store=True, readonly=False, precompute=True)
     loss_account_id = fields.Many2one(
-        'account.account', string='Unrealized Loss Account', required=True, check_company=True,
+        'account.account', string='Compte de perte latente', required=True, check_company=True,
         compute='_compute_from_company', store=True, readonly=False, precompute=True)
     reverse = fields.Boolean(
-        string='Reverse Next Period', compute='_compute_from_company', store=True, readonly=False,
+        string='Extourner à la période suivante', compute='_compute_from_company', store=True, readonly=False,
         precompute=True)
     reversal_date = fields.Date(
-        string='Reversal Date', compute='_compute_reversal_date', store=True, readonly=False,
+        string="Date d'extourne", compute='_compute_reversal_date', store=True, readonly=False,
         precompute=True)
     line_ids = fields.One2many(
-        'currency.revaluation.line', 'revaluation_id', string='Revaluation',
+        'currency.revaluation.line', 'revaluation_id', string='Réévaluation',
         compute='_compute_line_ids', store=True)
     adjustment = fields.Monetary(
-        string='Adjustment', compute='_compute_line_ids', store=True, currency_field='company_currency_id')
+        string='Ajustement', compute='_compute_line_ids', store=True, currency_field='company_currency_id')
 
     @api.depends('company_id')
     def _compute_from_company(self):
@@ -266,11 +266,11 @@ class CurrencyRevaluationLine(models.TransientModel):
 
     revaluation_id = fields.Many2one('currency.revaluation', required=True, ondelete='cascade')
     company_currency_id = fields.Many2one(
-        related='revaluation_id.company_currency_id', string='Company Currency')
-    account_id = fields.Many2one('account.account', string='Account', readonly=True)
-    partner_id = fields.Many2one('res.partner', string='Partner', readonly=True)
-    currency_id = fields.Many2one('res.currency', string='Currency', readonly=True)
-    amount_currency = fields.Monetary(string='Open Amount', currency_field='currency_id', readonly=True)
-    balance = fields.Monetary(string='In the Books', currency_field='company_currency_id', readonly=True)
-    revalued = fields.Monetary(string='At the Closing Rate', currency_field='company_currency_id', readonly=True)
-    adjustment = fields.Monetary(string='Adjustment', currency_field='company_currency_id', readonly=True)
+        related='revaluation_id.company_currency_id', string='Devise de la société')
+    account_id = fields.Many2one('account.account', string='Compte', readonly=True)
+    partner_id = fields.Many2one('res.partner', string='Partenaire', readonly=True)
+    currency_id = fields.Many2one('res.currency', string='Devise', readonly=True)
+    amount_currency = fields.Monetary(string='Montant en devise', currency_field='currency_id', readonly=True)
+    balance = fields.Monetary(string='Solde aux livres', currency_field='company_currency_id', readonly=True)
+    revalued = fields.Monetary(string='Au cours de clôture', currency_field='company_currency_id', readonly=True)
+    adjustment = fields.Monetary(string='Ajustement', currency_field='company_currency_id', readonly=True)

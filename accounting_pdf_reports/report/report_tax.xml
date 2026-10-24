@@ -7,35 +7,35 @@
             <t t-call="web.internal_layout">
                 <div class="page o_om_report">
                         <t t-call="accounting_pdf_reports.report_style"/>
-                    <h2>Tax Report</h2>
+                    <h2>Rapport de Taxes</h2>
 
                     <div id="informations" class="row mb-4">
                         <div class="col" t-if="data['date_from'] or data['date_to']">
-                            <strong>Period:</strong>
+                            <strong>Période :</strong>
                             <div>
                                 <t t-if="data['date_from'] and data['date_to']"><span t-out="data['date_from']" t-options="{'widget': 'date'}"/> - <span t-out="data['date_to']" t-options="{'widget': 'date'}"/></t>
-                                <t t-elif="data['date_from']">From <span t-out="data['date_from']" t-options="{'widget': 'date'}"/></t>
-                                <t t-else="">Until <span t-out="data['date_to']" t-options="{'widget': 'date'}"/></t>
+                                <t t-elif="data['date_from']">Du <span t-out="data['date_from']" t-options="{'widget': 'date'}"/></t>
+                                <t t-else="">Jusqu'au <span t-out="data['date_to']" t-options="{'widget': 'date'}"/></t>
                             </div>
                         </div>
                         <div class="col">
-                            <strong>Target Moves:</strong>
-                            <div t-if="data['target_move'] == 'all'">All Entries</div>
-                            <div t-if="data['target_move'] == 'posted'">All Posted Entries</div>
+                            <strong>Mouvements cibles :</strong>
+                            <div t-if="data['target_move'] == 'all'">Toutes les écritures</div>
+                            <div t-if="data['target_move'] == 'posted'">Toutes les écritures comptabilisées</div>
                         </div>
                     </div>
 
                     <table class="table table-sm table-reports">
                         <thead>
                             <tr>
-                                <th>Tax</th>
-                                <th class="text-end">Net</th>
-                                <th class="text-end">Tax</th>
+                                <th>Taxe</th>
+                                <th class="text-end">Base nette</th>
+                                <th class="text-end">Montant taxe</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr t-if="lines['sale']">
-                                <td colspan="3"><strong>Sales</strong></td>
+                                <td colspan="3"><strong>Ventes (TVA Collectée)</strong></td>
                             </tr>
                             <tr t-foreach="lines['sale']" t-as="line">
                                 <td class="ps-4"><span t-out="line.get('name')"/></td>
@@ -43,12 +43,12 @@
                                 <td class="text-end text-nowrap"><span t-out="line.get('tax')" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
                             </tr>
                             <tr t-if="lines['sale']" class="fw-bold border-top">
-                                <td class="ps-4">Total Sales</td>
+                                <td class="ps-4">Total Ventes</td>
                                 <td class="text-end text-nowrap"><span t-out="sum(line.get('net', 0.0) for line in lines['sale'])" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
                                 <td class="text-end text-nowrap"><span t-out="sum(line.get('tax', 0.0) for line in lines['sale'])" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
                             </tr>
                             <tr t-if="lines['purchase']">
-                                <td colspan="3"><strong>Purchases</strong></td>
+                                <td colspan="3"><strong>Achats (TVA Déductible)</strong></td>
                             </tr>
                             <tr t-foreach="lines['purchase']" t-as="line">
                                 <td class="ps-4"><span t-out="line.get('name')"/></td>
@@ -56,13 +56,13 @@
                                 <td class="text-end text-nowrap"><span t-out="line.get('tax')" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
                             </tr>
                             <tr t-if="lines['purchase']" class="fw-bold border-top">
-                                <td class="ps-4">Total Purchases</td>
+                                <td class="ps-4">Total Achats</td>
                                 <td class="text-end text-nowrap"><span t-out="sum(line.get('net', 0.0) for line in lines['purchase'])" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
                                 <td class="text-end text-nowrap"><span t-out="sum(line.get('tax', 0.0) for line in lines['purchase'])" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
                             </tr>
                             <!-- the taxes withheld on the payments (l10n_account_withholding_tax) -->
                             <tr t-if="lines.get('withholding')">
-                                <td colspan="3"><strong>Withholding</strong></td>
+                                <td colspan="3"><strong>Retenues à la source</strong></td>
                             </tr>
                             <tr t-foreach="lines.get('withholding', [])" t-as="line">
                                 <td class="ps-4"><span t-out="line.get('name')"/></td>
@@ -70,12 +70,12 @@
                                 <td class="text-end text-nowrap"><span t-out="line.get('tax')" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
                             </tr>
                             <tr t-if="lines.get('withholding')" class="fw-bold border-top">
-                                <td class="ps-4">Total Withholding</td>
+                                <td class="ps-4">Total Retenues</td>
                                 <td class="text-end text-nowrap"><span t-out="sum(line.get('net', 0.0) for line in lines['withholding'])" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
                                 <td class="text-end text-nowrap"><span t-out="sum(line.get('tax', 0.0) for line in lines['withholding'])" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
                             </tr>
                             <tr t-if="not lines['sale'] and not lines['purchase'] and not lines.get('withholding')">
-                                <td colspan="3" class="text-muted">No tax on this period.</td>
+                                <td colspan="3" class="text-muted">Aucune taxe sur cette période.</td>
                             </tr>
                         </tbody>
                     </table>

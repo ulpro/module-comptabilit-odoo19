@@ -6,10 +6,10 @@ class AccountingCommonPartnerReport(models.TransientModel):
     _inherit = "account.common.report"
     _description = 'Account Common Partner Report'
 
-    result_selection = fields.Selection([('customer', 'Receivable Accounts'),
-                                         ('supplier', 'Payable Accounts'),
-                                         ('customer_supplier', 'Receivable and Payable Accounts')
-                                         ], string="Partner's", required=True, default='customer')
+    result_selection = fields.Selection([('customer', 'Comptes clients (Créances)'),
+                                         ('supplier', 'Comptes fournisseurs (Dettes)'),
+                                         ('customer_supplier', 'Clients et Fournisseurs')
+                                         ], string="Partenaires", required=True, default='customer')
     partner_ids = fields.Many2many('res.partner', string='Partners')
 
     def pre_print_report(self, data):

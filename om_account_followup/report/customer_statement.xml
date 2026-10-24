@@ -35,20 +35,20 @@
             </t>
             <div class="page o_om_report">
                 <t t-call="om_account_followup.report_style"/>
-                <h2 t-if="is_vendor">Vendor Statement</h2>
-                <h2 t-else="">Customer Statement</h2>
+                <h2 t-if="is_vendor">Relevé de compte fournisseur</h2>
+                <h2 t-else="">Relevé de compte client</h2>
                 <div id="informations" class="row mb-4">
                     <div class="col">
                         <strong>Date</strong>
                         <div t-out="today_label"/>
                     </div>
                     <div class="col" t-if="partner.ref">
-                        <strong t-if="is_vendor">Vendor Reference</strong>
-                        <strong t-else="">Customer Reference</strong>
+                        <strong t-if="is_vendor">Référence fournisseur</strong>
+                        <strong t-else="">Référence client</strong>
                         <div t-field="partner.ref"/>
                     </div>
                     <div class="col" t-if="not is_vendor and partner.latest_followup_level_id">
-                        <strong>Reminder</strong>
+                        <strong>Niveau de relance</strong>
                         <div t-field="partner.latest_followup_level_id.name"/>
                     </div>
                 </div>
@@ -62,11 +62,11 @@
                             <tr>
                                 <th>Date</th>
                                 <th>Document</th>
-                                <th>Reference</th>
-                                <th>Due Date</th>
-                                <th class="text-end">Days Overdue</th>
-                                <th class="text-end">Amount</th>
-                                <th class="text-end">Open Amount</th>
+                                <th>Référence</th>
+                                <th>Date d'échéance</th>
+                                <th class="text-end">Jours de retard</th>
+                                <th class="text-end">Montant</th>
+                                <th class="text-end">Solde restant dû</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -75,7 +75,7 @@
                                 <td class="o_om_date"><span t-out="format_date(item['date'])"/></td>
                                 <td>
                                     <span t-out="item['name']"/>
-                                    <span t-if="item['disputed']" class="badge text-bg-secondary ms-1">Disputed</span>
+                                    <span t-if="item['disputed']" class="badge text-bg-secondary ms-1">En litige</span>
                                 </td>
                                 <td><span t-out="item['ref']"/></td>
                                 <td class="o_om_date"><span t-out="format_date(item['date_maturity'])"/></td>
@@ -92,14 +92,14 @@
                         </tbody>
                         <tbody>
                             <tr class="o_om_total">
-                                <td colspan="6">Total Open</td>
+                                <td colspan="6">Total restant dû</td>
                                 <td class="text-end">
                                     <span t-out="group['total']"
                                           t-options="{'widget': 'monetary', 'display_currency': currency}"/>
                                 </td>
                             </tr>
                             <tr class="o_om_total">
-                                <td colspan="6">Overdue</td>
+                                <td colspan="6">Montant échu (en retard)</td>
                                 <td class="text-end">
                                     <span t-out="group['total_overdue']"
                                           t-options="{'widget': 'monetary', 'display_currency': currency}"/>
@@ -108,7 +108,7 @@
                         </tbody>
                     </table>
 
-                    <h4>Ageing</h4>
+                    <h4>Balance âgée</h4>
                     <table class="table table-sm text-center">
                         <thead>
                             <tr>
@@ -125,21 +125,19 @@
                         </tbody>
                     </table>
                 </t>
-                <p t-if="not statement(partner)">Nothing is open on this account.</p>
+                <p t-if="not statement(partner)">Aucun solde ouvert sur ce compte.</p>
 
                 <div t-if="bank_accounts and not is_vendor" class="mt-4">
-                    <strong>Payment Details</strong>
+                    <strong>Coordonnées de règlement</strong>
                     <p class="m-0" t-foreach="bank_accounts" t-as="bank">
                         <span t-out="bank.display_name"/>
                     </p>
                 </div>
                 <p t-if="is_vendor" class="mt-3 text-muted">
-                    Please check these open amounts against your records and let our accounting department know
-                    of any difference.
+                    Merci de bien vouloir rapprocher ces montants ouverts avec vos enregistrements et signaler toute anomalie à notre service comptable.
                 </p>
                 <p t-else="" class="mt-3 text-muted">
-                    If you have already paid, please ignore the overdue amounts. For any question about this
-                    statement, contact our accounting department.
+                    Si votre règlement a déjà été effectué, nous vous prions de ne pas tenir compte des montants échus. Pour toute question relative à ce relevé, merci de contacter notre service comptable.
                 </p>
             </div>
         </t>

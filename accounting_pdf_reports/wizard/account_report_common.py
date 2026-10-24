@@ -17,9 +17,9 @@ class AccountCommonReport(models.TransientModel):
     )
     date_from = fields.Date(string='Start Date')
     date_to = fields.Date(string='End Date')
-    target_move = fields.Selection([('posted', 'All Posted Entries'),
-                                    ('all', 'All Entries'),
-                                    ], string='Target Moves', required=True, default='posted')
+    target_move = fields.Selection([('posted', 'Toutes les écritures comptabilisées'),
+                                    ('all', 'Toutes les écritures'),
+                                    ], string='Mouvements cibles', required=True, default='posted')
 
     @api.onchange('company_id')
     def _onchange_company_id(self):

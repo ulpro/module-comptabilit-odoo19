@@ -1,0 +1,188 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* om_account_cash_forecast
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: om_account_cash_forecast
+#: model:ir.actions.act_window,name:om_account_cash_forecast.action_cash_forecast_item
+#: model:ir.ui.menu,name:om_account_cash_forecast.menu_cash_forecast_item
+#: model:ir.ui.menu,name:om_account_cash_forecast.menu_cash_forecast_report
+msgid "Cash Forecast Items"
+msgstr "Prévisions de trésorerie"
+
+#. module: om_account_cash_forecast
+#: model:ir.actions.client,name:om_account_cash_forecast.action_cash_forecast_report
+msgid "Cash Forecast"
+msgstr "Prévisions de trésorerie"
+
+#. module: om_account_cash_forecast
+#: model:ir.model.fields,field_description:om_account_cash_forecast.field_account_cash_forecast_item__name
+msgid "Description"
+msgstr "Description"
+
+#. module: om_account_cash_forecast
+#: model:ir.model.fields,field_description:om_account_cash_forecast.field_account_cash_forecast_item__direction
+msgid "Type"
+msgstr "Type"
+
+#. module: om_account_cash_forecast
+#: model:ir.model.fields.selection,name:om_account_cash_forecast.selection__account_cash_forecast_item__direction__in
+msgid "Receipt"
+msgstr "Encaissement"
+
+#. module: om_account_cash_forecast
+#: model:ir.model.fields.selection,name:om_account_cash_forecast.selection__account_cash_forecast_item__direction__out
+msgid "Payment"
+msgstr "Décaissement"
+
+#. module: om_account_cash_forecast
+#: model_terms:ir.ui.view,arch_db:om_account_cash_forecast.view_cash_forecast_item_search
+msgid "Receipts"
+msgstr "Encaissements"
+
+#. module: om_account_cash_forecast
+#: model_terms:ir.ui.view,arch_db:om_account_cash_forecast.view_cash_forecast_item_search
+msgid "Payments"
+msgstr "Décaissements"
+
+#. module: om_account_cash_forecast
+#: model:ir.model.fields,field_description:om_account_cash_forecast.field_account_cash_forecast_item__amount
+msgid "Amount"
+msgstr "Montant"
+
+#. module: om_account_cash_forecast
+#: model:ir.model.fields,field_description:om_account_cash_forecast.field_account_cash_forecast_item__currency_id
+msgid "Currency"
+msgstr "Devise"
+
+#. module: om_account_cash_forecast
+#: model:ir.model.fields,field_description:om_account_cash_forecast.field_account_cash_forecast_item__date
+msgid "Expected On"
+msgstr "Date prévue"
+
+#. module: om_account_cash_forecast
+#: model:ir.model.fields,field_description:om_account_cash_forecast.field_account_cash_forecast_item__recurrence
+msgid "Recurrence"
+msgstr "Périodicité"
+
+#. module: om_account_cash_forecast
+#: model:ir.model.fields.selection,name:om_account_cash_forecast.selection__account_cash_forecast_item__recurrence__none
+msgid "Once"
+msgstr "Une seule fois"
+
+#. module: om_account_cash_forecast
+#: model:ir.model.fields.selection,name:om_account_cash_forecast.selection__account_cash_forecast_item__recurrence__weekly
+msgid "Every Week"
+msgstr "Chaque semaine"
+
+#. module: om_account_cash_forecast
+#: model:ir.model.fields.selection,name:om_account_cash_forecast.selection__account_cash_forecast_item__recurrence__monthly
+msgid "Every Month"
+msgstr "Chaque mois"
+
+#. module: om_account_cash_forecast
+#: model:ir.model.fields.selection,name:om_account_cash_forecast.selection__account_cash_forecast_item__recurrence__quarterly
+msgid "Every Quarter"
+msgstr "Chaque trimestre"
+
+#. module: om_account_cash_forecast
+#: model:ir.model.fields.selection,name:om_account_cash_forecast.selection__account_cash_forecast_item__recurrence__yearly
+msgid "Every Year"
+msgstr "Chaque année"
+
+#. module: om_account_cash_forecast
+#: model:ir.model.fields,field_description:om_account_cash_forecast.field_account_cash_forecast_item__date_end
+msgid "Until"
+msgstr "Jusqu'au"
+
+#. module: om_account_cash_forecast
+#: model:ir.model.fields,field_description:om_account_cash_forecast.field_account_cash_forecast_item__partner_id
+msgid "Partner"
+msgstr "Partenaire"
+
+#. module: om_account_cash_forecast
+#: model_terms:ir.actions.act_window,help:om_account_cash_forecast.action_cash_forecast_item
+msgid "Add the receipts and payments the invoices do not show"
+msgstr "Ajoutez les encaissements et décaissements non issus de factures"
+
+#. module: om_account_cash_forecast
+#: model_terms:ir.actions.act_window,help:om_account_cash_forecast.action_cash_forecast_item
+msgid "Salaries, rent, loan repayments, taxes... once or every month: they are part of the cash forecast."
+msgstr "Salaires, loyers, remboursements d'emprunts, impôts... ponctuels ou mensuels : ils s'intègrent dans la prévision de trésorerie."
+
+#. module: om_account_cash_forecast
+#: model:ir.model.fields,field_description:om_account_cash_forecast.field_account_cash_forecast_report__date_from
+msgid "From"
+msgstr "À partir du"
+
+#. module: om_account_cash_forecast
+#: model:ir.model.fields,field_description:om_account_cash_forecast.field_account_cash_forecast_report__period_type
+msgid "By"
+msgstr "Par"
+
+#. module: om_account_cash_forecast
+#: model:ir.model.fields.selection,name:om_account_cash_forecast.selection__account_cash_forecast_report__period_type__week
+msgid "Weeks"
+msgstr "Semaines"
+
+#. module: om_account_cash_forecast
+#: model:ir.model.fields.selection,name:om_account_cash_forecast.selection__account_cash_forecast_report__period_type__month
+msgid "Months"
+msgstr "Mois"
+
+#. module: om_account_cash_forecast
+#: model:ir.model.fields,field_description:om_account_cash_forecast.field_account_cash_forecast_report__period_count
+msgid "Number of Periods"
+msgstr "Nombre de périodes"
+
+#. module: om_account_cash_forecast
+#: model:ir.model.fields,field_description:om_account_cash_forecast.field_account_cash_forecast_report__overdue
+msgid "Overdue Invoices and Bills"
+msgstr "Factures et pièces échues"
+
+#. module: om_account_cash_forecast
+#: model:ir.model.fields.selection,name:om_account_cash_forecast.selection__account_cash_forecast_report__overdue__include
+msgid "Expected now, in an Overdue column"
+msgstr "Attendu maintenant, dans une colonne Échu"
+
+#. module: om_account_cash_forecast
+#: model:ir.model.fields.selection,name:om_account_cash_forecast.selection__account_cash_forecast_report__overdue__exclude
+msgid "Left out"
+msgstr "Exclu"
+
+#. module: om_account_cash_forecast
+#: model:ir.model.fields,field_description:om_account_cash_forecast.field_account_cash_forecast_report__include_drafts
+msgid "Include Draft Invoices and Bills"
+msgstr "Inclure les factures brouillons"
+
+#. module: om_account_cash_forecast
+#: model:ir.model.fields,field_description:om_account_cash_forecast.field_account_cash_forecast_report__display_partners
+msgid "Detail by Partner"
+msgstr "Détail par partenaire"
+
+#. module: om_account_cash_forecast
+#: model_terms:ir.ui.view,arch_db:om_account_cash_forecast.view_cash_forecast_report_form
+msgid "Print"
+msgstr "Imprimer"
+
+#. module: om_account_cash_forecast
+#: model_terms:ir.ui.view,arch_db:om_account_cash_forecast.view_cash_forecast_report_form
+msgid "Print Excel"
+msgstr "Imprimer Excel"
+
+#. module: om_account_cash_forecast
+#: model_terms:ir.ui.view,arch_db:om_account_cash_forecast.view_cash_forecast_report_form
+msgid "Cancel"
+msgstr "Annuler"
+

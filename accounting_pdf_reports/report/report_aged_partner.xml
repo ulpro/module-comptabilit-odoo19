@@ -7,35 +7,35 @@
             <t t-call="web.internal_layout">
                 <div class="page o_om_report">
                         <t t-call="accounting_pdf_reports.report_style"/>
-                    <h2>Aged Partner Balance</h2>
+                    <h2>Balance Âgée Tiers</h2>
 
                     <div id="informations" class="row mb-4">
                         <div class="col">
-                            <strong>As of Date:</strong>
+                            <strong>À la date du :</strong>
                             <div t-out="data['date_from']" t-options="{'widget': 'date'}"/>
                         </div>
                         <div class="col">
-                            <strong>Period Length (days):</strong>
+                            <strong>Durée de période (jours) :</strong>
                             <div t-out="data['period_length']"/>
                         </div>
                         <div class="col">
-                            <strong>Partners:</strong>
-                            <div t-if="data['result_selection'] == 'customer'">Receivable Accounts</div>
-                            <div t-if="data['result_selection'] == 'supplier'">Payable Accounts</div>
-                            <div t-if="data['result_selection'] == 'customer_supplier'">Receivable and Payable Accounts</div>
+                            <strong>Tiers :</strong>
+                            <div t-if="data['result_selection'] == 'customer'">Comptes clients</div>
+                            <div t-if="data['result_selection'] == 'supplier'">Comptes fournisseurs</div>
+                            <div t-if="data['result_selection'] == 'customer_supplier'">Comptes clients et fournisseurs</div>
                         </div>
                         <div class="col">
-                            <strong>Target Moves:</strong>
-                            <div t-if="data['target_move'] == 'all'">All Entries</div>
-                            <div t-if="data['target_move'] == 'posted'">All Posted Entries</div>
+                            <strong>Mouvements cibles :</strong>
+                            <div t-if="data['target_move'] == 'all'">Toutes les écritures</div>
+                            <div t-if="data['target_move'] == 'posted'">Toutes les écritures comptabilisées</div>
                         </div>
                     </div>
 
                     <table class="table table-sm table-reports">
                         <thead>
                             <tr>
-                                <th>Partners</th>
-                                <th class="text-end">Not due</th>
+                                <th>Partenaires</th>
+                                <th class="text-end">Non échu</th>
                                 <th class="text-end"><span t-out="data['4']['name']"/></th>
                                 <th class="text-end"><span t-out="data['3']['name']"/></th>
                                 <th class="text-end"><span t-out="data['2']['name']"/></th>
@@ -44,7 +44,7 @@
                                 <th class="text-end">Total</th>
                             </tr>
                             <tr t-if="get_partner_lines" class="o_om_total">
-                                <th>Account Total</th>
+                                <th>Total Général</th>
                                 <th class="text-end text-nowrap"><span t-out="get_direction[6]" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></th>
                                 <th class="text-end text-nowrap"><span t-out="get_direction[4]" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></th>
                                 <th class="text-end text-nowrap"><span t-out="get_direction[3]" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></th>

@@ -2,18 +2,18 @@
 <odoo>
 
     <record id="action_bank_reconciliation" model="ir.actions.client">
-        <field name="name">Bank Reconciliation</field>
+        <field name="name">Rapprochement bancaire</field>
         <field name="tag">om_bank_reconciliation</field>
     </record>
 
     <menuitem id="menu_reconciliation"
-              name="Reconciliation"
+              name="Rapprochement"
               parent="account.menu_finance_entries"
               sequence="15"
               groups="account.group_account_basic"/>
 
     <menuitem id="menu_bank_reconciliation"
-              name="Bank Reconciliation"
+              name="Rapprochement bancaire"
               action="action_bank_reconciliation"
               parent="menu_reconciliation"
               sequence="10"
@@ -22,13 +22,13 @@
     <!-- The same screen, opened on what the customers and the vendors have left to clear: what is settled
          without the bank, e.g. a cash payment, a credit note or an invoice against a refund. -->
     <record id="action_open_items_reconciliation" model="ir.actions.client">
-        <field name="name">Open Items</field>
+        <field name="name">Écritures ouvertes</field>
         <field name="tag">om_bank_reconciliation</field>
         <field name="params" eval="{'mode': 'open_items'}"/>
     </record>
 
     <menuitem id="menu_open_items_reconciliation"
-              name="Open Items"
+              name="Écritures ouvertes"
               action="action_open_items_reconciliation"
               parent="menu_reconciliation"
               sequence="20"
@@ -46,20 +46,20 @@
                 <button t-if="dashboard.number_to_reconcile > 0" type="object"
                         name="om_action_open_bank_reconciliation" class="btn btn-secondary o_om_dashboard_reconcile"
                         groups="account.group_account_basic">
-                    Reconcile <span class="badge rounded-pill text-bg-primary ms-1" t-out="dashboard.number_to_reconcile"/>
+                    Rapprocher <span class="badge rounded-pill text-bg-primary ms-1" t-out="dashboard.number_to_reconcile"/>
                 </button>
                 <button type="object" name="om_action_new_transaction" class="btn btn-secondary o_om_dashboard_new_transaction"
-                        groups="account.group_account_basic">New Transaction</button>
+                        groups="account.group_account_basic">Nouvelle transaction</button>
                 <button t-if="journal_type == 'cash'" type="object" name="om_action_new_statement"
                         class="btn btn-secondary o_om_dashboard_new_statement"
-                        groups="account.group_account_basic">New Statement</button>
+                        groups="account.group_account_basic">Nouveau relevé</button>
             </xpath>
             <!-- the figures the account module computes for the bank and cash cards without showing them -->
             <xpath expr="//div[@id='dashboard_bank_cash_balance']/.." position="after">
                 <div class="row o_om_dashboard_last_statement"
                      t-if="dashboard.has_at_least_one_statement and dashboard.last_statement_visible">
                     <div class="col overflow-hidden text-start">
-                        <a type="object" name="om_action_open_last_statement">Last Statement</a>
+                        <a type="object" name="om_action_open_last_statement">Dernier relevé</a>
                     </div>
                     <div class="col-auto text-end">
                         <span dir="ltr"><t t-out="dashboard.last_balance"/></span>
@@ -70,7 +70,7 @@
                 <div class="row o_om_dashboard_to_review" t-if="dashboard.number_to_check > 0"
                      groups="account.group_account_basic">
                     <div class="col overflow-hidden text-start">
-                        <a type="object" name="om_action_open_to_review"><t t-out="dashboard.number_to_check"/> To Review</a>
+                        <a type="object" name="om_action_open_to_review"><t t-out="dashboard.number_to_check"/> À vérifier</a>
                     </div>
                     <div class="col-auto text-end">
                         <span dir="ltr"><t t-out="dashboard.to_check_balance"/></span>

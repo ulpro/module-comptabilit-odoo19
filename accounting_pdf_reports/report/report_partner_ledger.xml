@@ -7,27 +7,27 @@
                 data_report_dpi="110">
                 <div class="page o_om_report">
                         <t t-call="accounting_pdf_reports.report_style"/>
-                    <h2>Partner Ledger</h2>
+                    <h2>Grand Livre des Tiers</h2>
 
                     <div id="informations" class="row mb-4">
                         <div class="col" t-if="data['form']['date_from'] or data['form']['date_to']">
-                            <strong>Period:</strong>
+                            <strong>Période :</strong>
                             <div>
                                 <t t-if="data['form']['date_from'] and data['form']['date_to']"><span t-out="data['form']['date_from']" t-options="{'widget': 'date'}"/> - <span t-out="data['form']['date_to']" t-options="{'widget': 'date'}"/></t>
-                                <t t-elif="data['form']['date_from']">From <span t-out="data['form']['date_from']" t-options="{'widget': 'date'}"/></t>
-                                <t t-else="">Until <span t-out="data['form']['date_to']" t-options="{'widget': 'date'}"/></t>
+                                <t t-elif="data['form']['date_from']">Du <span t-out="data['form']['date_from']" t-options="{'widget': 'date'}"/></t>
+                                <t t-else="">Jusqu'au <span t-out="data['form']['date_to']" t-options="{'widget': 'date'}"/></t>
                             </div>
                         </div>
                         <div class="col">
-                            <strong>Target Moves:</strong>
-                            <div t-if="data['form']['target_move'] == 'all'">All Entries</div>
-                            <div t-if="data['form']['target_move'] == 'posted'">All Posted Entries</div>
+                            <strong>Mouvements cibles :</strong>
+                            <div t-if="data['form']['target_move'] == 'all'">Toutes les écritures</div>
+                            <div t-if="data['form']['target_move'] == 'posted'">Toutes les écritures comptabilisées</div>
                         </div>
                         <div class="col">
-                            <strong>Partners:</strong>
-                            <div t-if="data['form'].get('result_selection') == 'customer'">Receivable Accounts</div>
-                            <div t-if="data['form'].get('result_selection') == 'supplier'">Payable Accounts</div>
-                            <div t-if="data['form'].get('result_selection') == 'customer_supplier'">Receivable and Payable Accounts</div>
+                            <strong>Partenaires :</strong>
+                            <div t-if="data['form'].get('result_selection') == 'customer'">Comptes clients (Créances)</div>
+                            <div t-if="data['form'].get('result_selection') == 'supplier'">Comptes fournisseurs (Dettes)</div>
+                            <div t-if="data['form'].get('result_selection') == 'customer_supplier'">Comptes clients et fournisseurs</div>
                         </div>
                     </div>
 
@@ -36,12 +36,12 @@
                             <tr>
                                 <th>Date</th>
                                 <th>JRNL</th>
-                                <th>Account</th>
-                                <th>Ref</th>
-                                <th class="text-end">Debit</th>
-                                <th class="text-end">Credit</th>
-                                <th class="text-end">Balance</th>
-                                <th class="text-end" t-if="data['form']['amount_currency']">Currency</th>
+                                <th>Compte</th>
+                                <th>Réf</th>
+                                <th class="text-end">Débit</th>
+                                <th class="text-end">Crédit</th>
+                                <th class="text-end">Solde</th>
+                                <th class="text-end" t-if="data['form']['amount_currency']">Devise</th>
                             </tr>
                         </thead>
                         <t t-foreach="docs" t-as="o">

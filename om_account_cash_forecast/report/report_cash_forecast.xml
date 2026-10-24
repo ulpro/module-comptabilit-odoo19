@@ -37,14 +37,14 @@
                     <t t-set="currency" t-value="forecast['currency']"/>
                     <div class="page o_om_report" style="font-size: 10px;">
                         <t t-call="om_account_cash_forecast.report_style"/>
-                        <h2>Cash Forecast</h2>
+                        <h2>Prévisions de trésorerie</h2>
                         <div id="informations" class="row mb-4">
                             <div class="col">
-                                <strong>From:</strong>
-                                <div class="o_om_date"><span t-field="o.date_from"/>, by <span t-field="o.period_type"/></div>
+                                <strong>À partir du :</strong>
+                                <div class="o_om_date"><span t-field="o.date_from"/>, par <span t-field="o.period_type"/></div>
                             </div>
                             <div class="col">
-                                <strong>Currency:</strong>
+                                <strong>Devise :</strong>
                                 <div t-out="currency.name"/>
                             </div>
                         </div>
@@ -58,7 +58,7 @@
                             </thead>
                             <tbody>
                                 <tr class="fw-bold">
-                                    <td>Opening balance</td>
+                                    <td>Solde d'ouverture</td>
                                     <t t-foreach="forecast['opening']" t-as="amount">
                                         <t t-set="negative_red" t-value="True"/>
                                         <t t-call="om_account_cash_forecast.report_cash_forecast_amount"/>
@@ -100,7 +100,7 @@
                                     </tr>
                                 </t>
                                 <tr class="o_om_total">
-                                    <td>Net cash flow</td>
+                                    <td>Flux net de trésorerie</td>
                                     <t t-foreach="forecast['net']" t-as="amount">
                                         <t t-call="om_account_cash_forecast.report_cash_forecast_amount"/>
                                     </t>
@@ -108,7 +108,7 @@
                                     <t t-call="om_account_cash_forecast.report_cash_forecast_amount"/>
                                 </tr>
                                 <tr class="fw-bold">
-                                    <td>Closing balance</td>
+                                    <td>Solde de clôture prévisionnel</td>
                                     <t t-foreach="forecast['closing']" t-as="amount">
                                         <t t-set="negative_red" t-value="True"/>
                                         <t t-call="om_account_cash_forecast.report_cash_forecast_amount"/>
@@ -118,12 +118,10 @@
                             </tbody>
                         </table>
                         <p t-if="forecast['lowest'] &lt; 0" class="text-danger fw-bold">
-                            The cash balance is expected to go negative.
+                            Attention : Le solde prévisionnel de trésorerie devient négatif sur la période.
                         </p>
                         <p class="text-muted">
-                            The balance is the one of the Bank and Cash accounts. The invoices and bills are expected
-                            on their due date; the payments registered but not reconciled with the bank yet are
-                            expected on their date.
+                            Le solde initial correspond aux comptes de Banque et de Caisse. Les factures clients et fournisseurs sont prises en compte à leur date d'échéance ; les paiements enregistrés non encore rapprochés avec la banque sont intégrés à leur date.
                         </p>
                     </div>
                 </t>

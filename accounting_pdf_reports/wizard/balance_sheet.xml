@@ -83,7 +83,7 @@
             </field>
             <field name="journal_ids" position="after">
                 <notebook tabpos="up" colspan="4">
-                    <page string="Comparison" name="comparison" invisible="enable_filter == False">
+                    <page string="Comparaison" name="comparison" invisible="enable_filter == False">
                         <group>
                             <field name="label_filter" required="enable_filter == True"/>
                             <field name="filter_cmp"/>

@@ -7,13 +7,13 @@
                 <t t-set-slot="layout-buttons">
                     <button class="btn btn-secondary o_om_bank_rec_auto" t-att-disabled="this.state.busy"
                             t-on-click="() => this.autoReconcile()">
-                        Auto-reconcile
+                        Rapprochement automatique
                     </button>
                 </t>
                 <t t-set-slot="layout-actions">
                     <div class="d-flex flex-wrap align-items-center gap-2">
                         <div class="btn-group" role="group">
-                            <button t-foreach="[['bank', 'Bank'], ['open_items', 'Open Items']]"
+                            <button t-foreach="[['bank', 'Banque'], ['open_items', 'Éléments ouverts']]"
                                     t-as="mode" t-key="mode[0]"
                                     t-att-class="'btn btn-secondary' + (this.state.mode === mode[0] ? ' active' : '')"
                                     t-att-data-mode="mode[0]"
@@ -21,13 +21,13 @@
                         </div>
                         <t t-if="this.state.mode === 'open_items'">
                             <div class="btn-group" role="group">
-                                <button t-foreach="[['receivable', 'Customers'], ['payable', 'Vendors']]"
+                                <button t-foreach="[['receivable', 'Clients'], ['payable', 'Fournisseurs']]"
                                         t-as="kind" t-key="kind[0]"
                                         t-att-class="'btn btn-secondary' + (this.state.accountType === kind[0] ? ' active' : '')"
                                         t-on-click="() => this.setAccountType(kind[0])" t-out="kind[1]"/>
                             </div>
                             <input type="search" class="form-control w-auto o_om_open_items_search"
-                                   placeholder="Search partner, entry or amount"
+                                   placeholder="Rechercher partenaire, pièce ou montant"
                                    t-att-value="this.state.search"
                                    t-on-input="(ev) => this.onOpenItemsSearchInput(ev)"/>
                         </t>
@@ -38,14 +38,14 @@
                                     t-out="journal.display_name"/>
                         </select>
                         <div class="btn-group" role="group">
-                            <button t-foreach="[['to_reconcile', 'To Reconcile'], ['to_review', 'To Check'], ['reconciled', 'Reconciled'], ['all', 'All']]"
+                            <button t-foreach="[['to_reconcile', 'À rapprocher'], ['to_review', 'À vérifier'], ['reconciled', 'Rapproché'], ['all', 'Tous']]"
                                     t-as="filter" t-key="filter[0]"
                                     t-att-class="'btn btn-secondary' + (this.state.filter === filter[0] ? ' active' : '')"
                                     t-att-data-filter="filter[0]"
                                     t-on-click="() => this.setFilter(filter[0])" t-out="filter[1]"/>
                         </div>
                         <input type="search" class="form-control w-auto o_om_bank_rec_search"
-                               placeholder="Search label, partner or amount"
+                               placeholder="Rechercher libellé, partenaire ou montant"
                                t-att-value="this.state.search" t-on-input="(ev) => this.onSearchInput(ev)"/>
                         </t>
                     </div>
@@ -58,25 +58,22 @@
                 <div class="o_om_bank_rec_list">
                     <div t-if="!this.state.transactions.length" class="o_om_bank_rec_empty text-muted p-4">
                         <t t-if="this.state.search">
-                            No transaction matches your search.
+                            Aucune transaction ne correspond à votre recherche.
                         </t>
                         <t t-elif="this.state.filter === 'reconciled'">
-                            Nothing is reconciled on this journal yet.
+                            Rien n'est encore rapproché sur ce journal.
                         </t>
                         <t t-elif="this.state.filter === 'to_review'">
-                            No transaction of this journal is marked to check.
+                            Aucune transaction de ce journal n'est marquée à vérifier.
                         </t>
                         <t t-else="">
-                            <p class="mb-2">Nothing left to reconcile on this journal.</p>
+                            <p class="mb-2">Plus rien à rapprocher sur ce journal.</p>
                             <p class="mb-0 small">
-                                What is reconciled here are the transactions of your bank: import a bank
-                                statement, or add a transaction on the journal, and it shows up in this list.
-                                A payment registered on an invoice waits on the outstanding account until the
-                                transaction of the bank confirms it.
+                                Ce qui est rapproché ici, ce sont les transactions de votre banque : importez un relevé bancaire ou ajoutez une transaction sur le journal pour la voir apparaître ici. Un paiement enregistré sur une facture attend sur le compte d'attente jusqu'à ce que la transaction bancaire le confirme.
                             </p>
                             <button t-if="this.state.journalId" class="btn btn-link px-0 mt-1"
                                     t-on-click="() => this.openJournal()">
-                                Go to the transactions of the journal
+                                Consulter les transactions du journal
                             </button>
                         </t>
                     </div>
@@ -92,19 +89,19 @@
                         <div class="text-truncate" t-out="tr.label"/>
                         <div class="d-flex justify-content-between gap-2 small">
                             <span class="text-truncate text-muted" t-out="tr.partner_name"/>
-                            <span t-if="tr.is_reconciled" class="badge text-bg-success">Reconciled</span>
-                            <span t-elif="tr.review_state === 'todo'" class="badge text-bg-warning">To check</span>
+                            <span t-if="tr.is_reconciled" class="badge text-bg-success">Rapproché</span>
+                            <span t-elif="tr.review_state === 'todo'" class="badge text-bg-warning">À vérifier</span>
                         </div>
                     </div>
                     <button t-if="this.state.transactions.length &lt; this.state.count"
                             class="btn btn-link w-100" t-on-click="() => this.loadMore()">
-                        Load more
+                        Charger plus
                     </button>
                 </div>
 
                 <div class="o_om_bank_rec_panel">
                     <div t-if="!this.transaction" class="o_om_bank_rec_empty text-muted p-4">
-                        Select a transaction to reconcile it.
+                        Sélectionnez une transaction pour la rapprocher.
                     </div>
                     <t t-else="" t-call="om_account_reconcile.BankReconciliation.Panel"/>
                 </div>
@@ -127,7 +124,7 @@
                                             resModel="'res.partner'"
                                             resId="this.state.proposal.partner_id"
                                             update.bind="this.setPartner"
-                                            placeholder="'Partner'"/>
+                                            placeholder="'Partenaire'"/>
                             <span t-else="" t-out="tr.partner_name"/>
                         </div>
                     </div>
@@ -135,15 +132,15 @@
                         <div t-att-class="'fs-3 fw-bold ' + (tr.amount &lt; 0 ? 'text-danger' : '')"
                              t-out="this.format(tr.amount, tr.currency_id)"/>
                         <div t-if="!this.isReconciled" class="o_om_bank_rec_remaining">
-                            <span class="text-muted">To reconcile: </span>
+                            <span class="text-muted">À rapprocher : </span>
                             <span t-att-class="this.remaining ? 'fw-bold text-warning' : 'fw-bold text-success'"
                                   t-out="this.formatAbs(this.remaining, tr.currency_id)"/>
                         </div>
                         <div class="d-flex justify-content-end gap-2 mt-2">
-                            <button class="btn btn-link btn-sm" t-on-click="() => this.openMove(tr.move_id)">Open entry</button>
+                            <button class="btn btn-link btn-sm" t-on-click="() => this.openMove(tr.move_id)">Ouvrir la pièce</button>
                             <button t-if="!this.isReconciled" class="btn btn-link btn-sm o_om_bank_rec_to_check"
                                     t-on-click="() => this.toggleToCheck()"
-                                    t-out="tr.review_state === 'todo' ? 'Mark as checked' : 'To check'"/>
+                                    t-out="tr.review_state === 'todo' ? 'Marquer comme vérifié' : 'À vérifier'"/>
                         </div>
                     </div>
                 </div>
@@ -153,7 +150,7 @@
         <t t-if="this.isReconciled">
             <table class="table table-sm o_om_bank_rec_entry">
                 <thead>
-                    <tr><th>Account</th><th>Label</th><th>Matched with</th><th class="text-end">Amount</th></tr>
+                    <tr><th>Compte</th><th>Libellé</th><th>Lettré avec</th><th class="text-end">Montant</th></tr>
                 </thead>
                 <tbody>
                     <tr t-foreach="this.state.data.entry_lines" t-as="line" t-key="line.id">
@@ -165,7 +162,7 @@
                 </tbody>
             </table>
             <button class="btn btn-secondary o_om_bank_rec_undo" t-att-disabled="this.state.busy" t-on-click="() => this.undo()">
-                Undo reconciliation
+                Annuler le rapprochement
             </button>
         </t>
 
@@ -175,16 +172,16 @@
                     <table class="table table-sm mb-0">
                         <thead>
                             <tr>
-                                <th>Counterpart</th>
-                                <th>Account</th>
-                                <th class="text-end">Open amount</th>
-                                <th class="text-end" style="width: 11rem;">Reconciled amount</th>
+                                <th>Contrepartie</th>
+                                <th>Compte</th>
+                                <th class="text-end">Montant ouvert</th>
+                                <th class="text-end" style="width: 11rem;">Montant rapproché</th>
                                 <th style="width: 2rem;"/>
                             </tr>
                         </thead>
                         <tbody>
                             <tr t-foreach="this.state.data.entry_lines.filter((line) => !line.is_suspense)" t-as="line" t-key="'existing' + line.id" class="text-muted">
-                                <td><t t-out="line.label"/> <span class="badge text-bg-light">already reconciled</span></td>
+                                <td><t t-out="line.label"/> <span class="badge text-bg-light">déjà rapproché</span></td>
                                 <td t-out="line.account_display"/>
                                 <td/>
                                 <td class="text-end" t-out="this.formatAbs(line.amount_currency, line.currency_id)"/>
@@ -203,14 +200,14 @@
                                            t-att-placeholder="this.formatAbs(this.previewAmountFor(match), match.candidate.currency_id)"
                                            t-on-change="(ev) => this.setMatchAmount(match_index, ev)"/>
                                 </td>
-                                <td><button class="btn btn-link text-danger p-0" title="Remove" t-on-click="() => this.removeMatch(match_index)">×</button></td>
+                                <td><button class="btn btn-link text-danger p-0" title="Supprimer" t-on-click="() => this.removeMatch(match_index)">×</button></td>
                             </tr>
                             <tr t-foreach="this.state.proposal.writeoffs" t-as="writeoff" t-key="'writeoff' + writeoff_index" class="o_om_bank_rec_writeoff_row">
                                 <td t-out="writeoff.label or tr.label"/>
                                 <td class="small" t-out="this.writeoffPreviewLine(writeoff_index).account_display or ''"/>
                                 <td/>
                                 <td class="text-end" t-out="this.formatAbs(this.writeoffPreviewLine(writeoff_index).amount_transaction ?? writeoff.amount, tr.currency_id)"/>
-                                <td><button class="btn btn-link text-danger p-0" title="Remove" t-on-click="() => this.removeWriteoff(writeoff_index)">×</button></td>
+                                <td><button class="btn btn-link text-danger p-0" title="Supprimer" t-on-click="() => this.removeWriteoff(writeoff_index)">×</button></td>
                             </tr>
                             <tr t-foreach="(this.state.preview?.lines or []).filter((line) => line.kind === 'tax')" t-as="line" t-key="'tax' + line_index" class="text-muted">
                                 <td t-out="line.label"/>
@@ -221,7 +218,7 @@
                             </tr>
                             <tr t-if="!this.state.proposal.matches.length and !this.state.proposal.writeoffs.length">
                                 <td colspan="5" class="text-muted text-center py-3">
-                                    Add journal items to match or a counterpart below.
+                                    Ajoutez des écritures comptables à associer ou une contrepartie ci-dessous.
                                 </td>
                             </tr>
                         </tbody>
@@ -229,15 +226,15 @@
                 </div>
                 <div class="card-footer d-flex flex-wrap justify-content-between align-items-center gap-2">
                     <div>
-                        <span class="text-muted">Left on the suspense account: </span>
+                        <span class="text-muted">Reste sur le compte d'attente : </span>
                         <span t-att-class="this.remaining ? 'fw-bold text-warning' : 'fw-bold text-success'"
                               t-out="this.formatAbs(this.remaining, tr.currency_id)"/>
                     </div>
                     <div class="d-flex gap-2">
-                        <button class="btn btn-secondary" t-on-click="() => this.resetProposal()">Reset</button>
+                        <button class="btn btn-secondary" t-on-click="() => this.resetProposal()">Réinitialiser</button>
                         <button class="btn btn-primary o_om_bank_rec_validate" t-att-disabled="!this.canValidate"
                                 title="Ctrl+Enter" t-on-click="() => this.validate()">
-                            <t t-out="this.state.preview?.is_complete ? 'Validate' : 'Validate (partial)'"/>
+                            <t t-out="this.state.preview?.is_complete ? 'Valider' : 'Valider (partiel)'"/>
                         </button>
                     </div>
                 </div>
@@ -246,27 +243,27 @@
             <ul class="nav nav-tabs mb-2">
                 <li class="nav-item">
                     <a href="#" t-att-class="'nav-link' + (this.state.tab === 'match' ? ' active' : '')"
-                       data-tab="match" t-on-click.prevent="() => this.state.tab = 'match'">Match journal items</a>
+                       data-tab="match" t-on-click.prevent="() => this.state.tab = 'match'">Associer des écritures</a>
                 </li>
                 <li class="nav-item">
                     <a href="#" t-att-class="'nav-link' + (this.state.tab === 'writeoff' ? ' active' : '')"
-                       data-tab="writeoff" t-on-click.prevent="() => this.state.tab = 'writeoff'">Counterpart</a>
+                       data-tab="writeoff" t-on-click.prevent="() => this.state.tab = 'writeoff'">Contrepartie</a>
                 </li>
                 <li class="nav-item" t-if="this.state.data.models.length">
                     <a href="#" t-att-class="'nav-link' + (this.state.tab === 'models' ? ' active' : '')"
-                       data-tab="models" t-on-click.prevent="() => this.state.tab = 'models'">Reconciliation models</a>
+                       data-tab="models" t-on-click.prevent="() => this.state.tab = 'models'">Modèles de rapprochement</a>
                 </li>
             </ul>
 
             <div t-if="this.state.tab === 'match'" class="o_om_bank_rec_candidates">
                 <input type="search" class="form-control mb-2 o_om_bank_rec_candidate_search"
-                       placeholder="Search a reference, a partner or an amount"
+                       placeholder="Rechercher une référence, un partenaire ou un montant"
                        t-att-value="this.state.candidateSearch" t-on-input="(ev) => this.onCandidateSearchInput(ev)"/>
                 <table class="table table-sm table-hover">
                     <thead>
                         <tr>
-                            <th>Entry</th><th>Partner</th><th>Date</th><th>Due</th><th>Account</th>
-                            <th class="text-end">Open amount</th>
+                            <th>Pièce</th><th>Partenaire</th><th>Date</th><th>Échéance</th><th>Compte</th>
+                            <th class="text-end">Montant ouvert</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -276,7 +273,7 @@
                             t-on-click="() => this.addMatch(candidate)">
                             <td>
                                 <t t-out="candidate.move_name"/>
-                                <span t-if="candidate.score &gt;= 60" class="badge text-bg-info ms-1">Suggested</span>
+                                <span t-if="candidate.score &gt;= 60" class="badge text-bg-info ms-1">Suggéré</span>
                                 <div class="small text-muted" t-out="candidate.label"/>
                             </td>
                             <td t-out="candidate.partner_name"/>
@@ -287,7 +284,7 @@
                                 t-out="this.format(candidate.residual_currency, candidate.currency_id)"/>
                         </tr>
                         <tr t-if="!this.state.candidates.length">
-                            <td colspan="6" class="text-muted text-center py-3">No open journal item found.</td>
+                            <td colspan="6" class="text-muted text-center py-3">Aucune écriture ouverte trouvée.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -297,15 +294,15 @@
                 <div class="card-body">
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <label class="form-label">Account</label>
+                            <label class="form-label">Compte</label>
                             <RecordSelector resModel="'account.account'" resId="this.state.writeoff.account_id"
                                             domain="this.accountDomain" update.bind="this.setWriteoffAccount"
-                                            placeholder="'Account'"/>
+                                            placeholder="'Compte'"/>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Label</label>
+                            <label class="form-label">Libellé</label>
                             <input type="text" class="o_input o_om_bank_rec_writeoff_label" t-att-value="this.state.writeoff.label"
-                                   t-att-placeholder="tr.label" t-on-change="(ev) => this.state.writeoff.label = ev.target.value"/>
+                                    t-att-placeholder="tr.label" t-on-change="(ev) => this.state.writeoff.label = ev.target.value"/>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Taxes</label>
@@ -316,17 +313,17 @@
                                 <input type="checkbox" class="form-check-input" id="om_bank_rec_tax_included"
                                        t-att-checked="this.state.writeoff.tax_included"
                                        t-on-change="(ev) => this.state.writeoff.tax_included = ev.target.checked"/>
-                                <label class="form-check-label" for="om_bank_rec_tax_included">The amount includes the taxes</label>
+                                <label class="form-check-label" for="om_bank_rec_tax_included">Le montant inclut les taxes</label>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Amount</label>
+                            <label class="form-label">Montant</label>
                             <input type="text" class="o_input text-end o_om_bank_rec_writeoff_amount"
                                    t-att-value="this.state.writeoff.amount"
                                    t-on-change="(ev) => this.setWriteoffAmount(ev)"/>
                         </div>
                     </div>
-                    <button class="btn btn-primary mt-3 o_om_bank_rec_add_writeoff" t-on-click="() => this.addWriteoff()">Add counterpart</button>
+                    <button class="btn btn-primary mt-3 o_om_bank_rec_add_writeoff" t-on-click="() => this.addWriteoff()">Ajouter la contrepartie</button>
                 </div>
             </div>
 
@@ -338,14 +335,13 @@
         </t>
     </t>
 
-    <!-- What the customers and the vendors have left to clear, without any transaction of the bank:
-         a cash payment against its invoice, a credit note against an invoice, an invoice against a refund. -->
+    <!-- Éléments ouverts clients et fournisseurs sans transaction bancaire -->
     <t t-name="om_account_reconcile.BankReconciliation.OpenItems">
         <div class="o_content o_om_bank_rec_content">
             <div class="o_om_bank_rec_list">
                 <div t-if="!this.state.groups.length" class="o_om_bank_rec_empty text-muted p-4">
-                    <t t-if="this.state.search">No partner matches your search.</t>
-                    <t t-else="">Nothing left to clear here.</t>
+                    <t t-if="this.state.search">Aucun partenaire ne correspond à votre recherche.</t>
+                    <t t-else="">Plus rien à lettrer ici.</t>
                 </div>
                 <div t-foreach="this.state.groups" t-as="group" t-key="group.partner_id + '-' + group.account_id"
                      t-att-class="'o_om_bank_rec_transaction' + (this.state.selectedGroup and this.sameGroup(group, this.state.selectedGroup) ? ' o_selected' : '')"
@@ -357,14 +353,14 @@
                     </div>
                     <div class="d-flex justify-content-between gap-2 small text-muted">
                         <span class="text-truncate" t-out="group.account_display"/>
-                        <span><t t-out="group.count"/> items</span>
+                        <span><t t-out="group.count"/> éléments</span>
                     </div>
                 </div>
             </div>
 
             <div class="o_om_bank_rec_panel">
                 <div t-if="!this.state.selectedGroup" class="o_om_bank_rec_empty text-muted p-4">
-                    Select a customer or a vendor to clear what is open.
+                    Sélectionnez un client ou un fournisseur pour lettrer ce qui est ouvert.
                 </div>
                 <t t-else="">
                     <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
@@ -377,9 +373,9 @@
                             <tr>
                                 <th/>
                                 <th>Date</th>
-                                <th>Entry</th>
-                                <th>Label</th>
-                                <th class="text-end">Amount Left</th>
+                                <th>Pièce</th>
+                                <th>Libellé</th>
+                                <th class="text-end">Montant restant</th>
                                 <th/>
                             </tr>
                         </thead>
@@ -397,7 +393,7 @@
                                 <td t-att-class="'text-end text-nowrap ' + (item.amount_residual &lt; 0 ? 'text-danger' : '')"
                                     t-out="this.format(item.amount_residual, item.company_currency_id)"/>
                                 <td>
-                                    <button class="btn btn-link btn-sm px-0" title="Open the entry"
+                                    <button class="btn btn-link btn-sm px-0" title="Ouvrir la pièce"
                                             t-on-click="() => this.openItemMove(item)">
                                         <i class="fa fa-external-link"/>
                                     </button>
@@ -406,7 +402,7 @@
                         </tbody>
                     </table>
 
-                    <!-- Closing the rest of a partial settlement: a discount given, a bad debt, a rounding. -->
+                    <!-- Clôture du reliquat : escompte accordé, créance douteuse, arrondi -->
                     <div t-if="this.canWriteOffItems" class="card o_om_open_items_writeoff mt-3">
                         <div class="card-body py-2">
                             <div class="form-check">
@@ -415,17 +411,17 @@
                                        t-att-checked="this.state.itemWriteoff.enabled"
                                        t-on-change="() => this.toggleItemWriteoff()"/>
                                 <label class="form-check-label" for="om_open_items_writeoff">
-                                    Write the rest off instead of leaving it open
+                                    Passer le reliquat en perte/profit au lieu de le laisser ouvert
                                 </label>
                             </div>
                             <div t-if="this.state.itemWriteoff.enabled" class="row g-2 mt-1">
                                 <div class="col-md-4">
-                                    <label class="form-label small mb-0">Account</label>
+                                    <label class="form-label small mb-0">Compte</label>
                                     <RecordSelector resModel="'account.account'"
                                                     resId="this.state.itemWriteoff.account_id"
                                                     domain="this.accountDomain"
                                                     update.bind="this.setItemWriteoffAccount"
-                                                    placeholder="'e.g. Discount given'"/>
+                                                    placeholder="'ex: Escompte accordé'"/>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label small mb-0">Journal</label>
@@ -435,10 +431,10 @@
                                                     placeholder="'Journal'"/>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="form-label small mb-0">Label</label>
+                                    <label class="form-label small mb-0">Libellé</label>
                                     <input type="text" class="o_input w-100 o_om_open_items_writeoff_label"
                                            t-att-value="this.state.itemWriteoff.label"
-                                           placeholder="e.g. Early payment discount"
+                                           placeholder="ex: Escompte de règlement"
                                            t-on-change="(ev) => this.setItemWriteoffLabel(ev)"/>
                                 </div>
                             </div>
@@ -447,33 +443,33 @@
 
                     <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mt-3">
                         <div class="small text-muted">
-                            <div>To receive or to pay: <t t-out="this.format(this.state.openItemTotals.debit, this.state.selectedGroup.currency_id)"/></div>
-                            <div>Already settled on the other side: <t t-out="this.format(this.state.openItemTotals.credit, this.state.selectedGroup.currency_id)"/></div>
+                            <div>À recevoir ou à payer : <t t-out="this.format(this.state.openItemTotals.debit, this.state.selectedGroup.currency_id)"/></div>
+                            <div>Déjà soldé de l'autre côté : <t t-out="this.format(this.state.openItemTotals.credit, this.state.selectedGroup.currency_id)"/></div>
                         </div>
                         <div class="text-end">
                             <div t-if="!this.pickedItems.length" class="text-muted">
-                                Pick what is owed together with what settles it
+                                Cochez les créances/dettes avec le paiement qui les solde
                             </div>
                             <t t-elif="!this.canReconcileItems">
                                 <div class="text-danger">
-                                    These are all on the same side: add what settles them
+                                    Toutes les écritures cochées sont du même côté (débit/crédit) : cochez la contrepartie
                                 </div>
                             </t>
                             <t t-else="">
                                 <div t-if="this.stillOpenAfter" class="fw-bold">
-                                    <t t-if="this.state.itemWriteoff.enabled">Written off: </t>
-                                    <t t-else="">Stays open: </t>
+                                    <t t-if="this.state.itemWriteoff.enabled">Extourné / Perte-Profit : </t>
+                                    <t t-else="">Reste ouvert : </t>
                                     <t t-out="this.format(this.stillOpenAfter, this.state.selectedGroup.currency_id)"/>
                                 </div>
                                 <div t-else="" class="fw-bold text-success">
-                                    Settles in full
+                                    Entièrement soldé
                                 </div>
                             </t>
                             <button class="btn btn-primary mt-2 o_om_open_items_reconcile"
                                     t-att-disabled="!this.canReconcileItems"
                                     t-on-click="() => this.reconcileItems()">
-                                <t t-if="this.state.itemWriteoff.enabled">Reconcile and write off</t>
-                                <t t-else="">Reconcile</t>
+                                <t t-if="this.state.itemWriteoff.enabled">Rapprocher et extourner</t>
+                                <t t-else="">Rapprocher</t>
                             </button>
                         </div>
                     </div>

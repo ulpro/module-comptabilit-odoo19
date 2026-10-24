@@ -8,24 +8,24 @@
                 <t t-set="by_account" t-value="data.get('display_detail') == 'accounts'"/>
                 <div class="page o_om_report">
                         <t t-call="accounting_pdf_reports.report_style"/>
-                    <h2>Cash Flow Statement</h2>
+                    <h2>Tableau des Flux de Trésorerie</h2>
 
                     <div id="informations" class="row mb-4">
                         <div class="col" t-if="data['date_from'] or data['date_to']">
-                            <strong>Period:</strong>
+                            <strong>Période :</strong>
                             <div>
                                 <t t-if="data['date_from'] and data['date_to']"><span t-out="data['date_from']" t-options="{'widget': 'date'}"/> - <span t-out="data['date_to']" t-options="{'widget': 'date'}"/></t>
-                                <t t-elif="data['date_from']">From <span t-out="data['date_from']" t-options="{'widget': 'date'}"/></t>
-                                <t t-else="">Until <span t-out="data['date_to']" t-options="{'widget': 'date'}"/></t>
+                                <t t-elif="data['date_from']">Du <span t-out="data['date_from']" t-options="{'widget': 'date'}"/></t>
+                                <t t-else="">Jusqu'au <span t-out="data['date_to']" t-options="{'widget': 'date'}"/></t>
                             </div>
                         </div>
                         <div class="col">
-                            <strong>Target Moves:</strong>
-                            <div t-if="data['target_move'] == 'all'">All Entries</div>
-                            <div t-if="data['target_move'] == 'posted'">All Posted Entries</div>
+                            <strong>Mouvements cibles :</strong>
+                            <div t-if="data['target_move'] == 'all'">Toutes les écritures</div>
+                            <div t-if="data['target_move'] == 'posted'">Toutes les écritures comptabilisées</div>
                         </div>
                         <div class="col">
-                            <strong>Journals:</strong>
+                            <strong>Journaux :</strong>
                             <div t-out="', '.join([journal or '' for journal in print_journal])"/>
                         </div>
                     </div>
@@ -34,12 +34,12 @@
                         <thead>
                             <tr>
                                 <th>Description</th>
-                                <th class="text-end">Amount</th>
+                                <th class="text-end">Montant</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr class="fw-bold">
-                                <td>Cash and cash equivalents at the beginning of the period</td>
+                                <td>Trésorerie et équivalents de trésorerie à l'ouverture</td>
                                 <td class="text-end text-nowrap"><span t-out="cash_flow['opening']" t-options="{'widget': 'monetary', 'display_currency': currency}"/></td>
                             </tr>
                             <t t-foreach="cash_flow['sections']" t-as="section">
@@ -47,7 +47,7 @@
                                     <td colspan="2" class="pt-3"><span t-out="section['name']"/></td>
                                 </tr>
                                 <tr t-if="not section['lines']">
-                                    <td class="ps-4 text-muted">No cash movement</td>
+                                    <td class="ps-4 text-muted">Aucun mouvement de trésorerie</td>
                                     <td/>
                                 </tr>
                                 <t t-foreach="section['lines']" t-as="line">
@@ -63,23 +63,22 @@
                                     </t>
                                 </t>
                                 <tr class="fw-bold border-top">
-                                    <td class="ps-4">Net cash from <span t-out="section['name'].lower()"/></td>
+                                    <td class="ps-4">Flux net <span t-out="section['name'].lower()"/></td>
                                     <td class="text-end text-nowrap"><span t-out="section['total']" t-options="{'widget': 'monetary', 'display_currency': currency}"/></td>
                                 </tr>
                             </t>
                             <tr class="fw-bold border-top border-dark">
-                                <td>Net increase (decrease) in cash and cash equivalents</td>
+                                <td>Variation nette de trésorerie sur la période</td>
                                 <td class="text-end text-nowrap"><span t-out="cash_flow['net_change']" t-options="{'widget': 'monetary', 'display_currency': currency}"/></td>
                             </tr>
                             <tr class="fw-bold">
-                                <td>Cash and cash equivalents at the end of the period</td>
+                                <td>Trésorerie et équivalents de trésorerie à la clôture</td>
                                 <td class="text-end text-nowrap"><span t-out="cash_flow['closing']" t-options="{'widget': 'monetary', 'display_currency': currency}"/></td>
                             </tr>
                         </tbody>
                     </table>
                     <p class="text-muted small">
-                        Cash and cash equivalents are the Bank and Cash accounts. The cash paid or received is classified
-                        by what it was paid for, following the payments to the invoices and bills they settle.
+                        La trésorerie et les équivalents de trésorerie correspondent aux comptes de Banque et Caisse.
                     </p>
                 </div>
             </t>

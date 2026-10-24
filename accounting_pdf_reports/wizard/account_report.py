@@ -14,20 +14,18 @@ class AccountingReport(models.TransientModel):
             reports = self.env['account.financial.report'].search([('name', 'ilike', menu)])
         return reports and reports[0] or False
 
-    enable_filter = fields.Boolean(string='Enable Comparison')
-    account_report_id = fields.Many2one('account.financial.report', string='Account Reports',
+    enable_filter = fields.Boolean(string='Activer la comparaison')
+    account_report_id = fields.Many2one('account.financial.report', string='Rapport financier',
                                         required=True, default=_get_account_report)
-    label_filter = fields.Char(string='Column Label', help="This label will be displayed on report to "
-                                                           "show the balance computed for the given comparison filter.")
-    filter_cmp = fields.Selection([('filter_no', 'No Filters'), ('filter_date', 'Date')],
-                                  string='Filter by', required=True, default='filter_no')
-    date_from_cmp = fields.Date(string='Date From')
-    date_to_cmp = fields.Date(string='Date To')
-    debit_credit = fields.Boolean(string='Display Debit/Credit Columns',
-                                  help="This option allows you to get more details about "
-                                       "the way your balances are computed."
-                                       " Because it is space consuming, we do not allow to"
-                                       " use it while doing a comparison.")
+    label_filter = fields.Char(string='Libellé de colonne', help="Ce libellé sera affiché sur le rapport pour "
+                                                           "indiquer le solde calculé pour le filtre de comparaison.")
+    filter_cmp = fields.Selection([('filter_no', 'Aucun filtre'), ('filter_date', 'Date')],
+                                  string='Filtrer par', required=True, default='filter_no')
+    date_from_cmp = fields.Date(string='Date de début (comp.)')
+    date_to_cmp = fields.Date(string='Date de fin (comp.)')
+    debit_credit = fields.Boolean(string='Afficher les colonnes Débit / Crédit',
+                                  help="Cette option vous permet d'obtenir le détail des débits et crédits "
+                                       "ayant servi au calcul des soldes.")
 
     def _build_comparison_context(self, data):
         result = {}

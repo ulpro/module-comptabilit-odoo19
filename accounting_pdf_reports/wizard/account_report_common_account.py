@@ -6,10 +6,10 @@ class AccountCommonAccountReport(models.TransientModel):
     _inherit = "account.common.report"
     _description = 'Account Common Account Report'
 
-    display_account = fields.Selection([('all', 'All'), 
-                                        ('movement', 'With movements'),
-                                        ('not_zero', 'With balance is not equal to 0'), ],
-                                       string='Display Accounts',
+    display_account = fields.Selection([('all', 'Tout'), 
+                                        ('movement', 'Avec des mouvements'),
+                                        ('not_zero', 'Avec un solde non nul'), ],
+                                       string='Afficher les comptes',
                                        required=True, default='movement')
     analytic_account_ids = fields.Many2many('account.analytic.account', 
                                             string='Analytic Accounts')

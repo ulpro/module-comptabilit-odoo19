@@ -8,9 +8,9 @@ class AccountAgedTrialBalance(models.TransientModel):
     _inherit = 'account.common.partner.report'
     _description = 'Account Aged Trial balance Report'
 
-    period_length = fields.Integer(string='Period Length (days)', required=True, default=30)
-    journal_ids = fields.Many2many('account.journal', string='Journals', required=True)
-    date_from = fields.Date(string='As of Date', default=fields.Date.context_today)
+    period_length = fields.Integer(string='Durée de la période (jours)', required=True, default=30)
+    journal_ids = fields.Many2many('account.journal', string='Journaux', required=True)
+    date_from = fields.Date(string='À la date du', default=fields.Date.context_today)
 
     def _get_report_data(self, data):
         res = {}

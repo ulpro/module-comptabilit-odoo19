@@ -11,27 +11,27 @@
 
                         <div id="informations" class="row mb-4">
                             <div class="col" t-if="data['date_from'] or data['date_to']">
-                                <strong>Period:</strong>
+                                <strong>Période :</strong>
                                 <div>
                                     <t t-if="data['date_from'] and data['date_to']"><span t-out="data['date_from']" t-options="{'widget': 'date'}"/> - <span t-out="data['date_to']" t-options="{'widget': 'date'}"/></t>
-                                    <t t-elif="data['date_from']">From <span t-out="data['date_from']" t-options="{'widget': 'date'}"/></t>
-                                    <t t-else="">Until <span t-out="data['date_to']" t-options="{'widget': 'date'}"/></t>
+                                    <t t-elif="data['date_from']">Du <span t-out="data['date_from']" t-options="{'widget': 'date'}"/></t>
+                                    <t t-else="">Jusqu'au <span t-out="data['date_to']" t-options="{'widget': 'date'}"/></t>
                                 </div>
                             </div>
                             <div class="col">
-                                <strong>Target Moves:</strong>
-                                <div t-if="data['target_move'] == 'all'">All Entries</div>
-                                <div t-if="data['target_move'] == 'posted'">All Posted Entries</div>
+                                <strong>Mouvements cibles :</strong>
+                                <div t-if="data['target_move'] == 'all'">Toutes les écritures</div>
+                                <div t-if="data['target_move'] == 'posted'">Toutes les écritures comptabilisées</div>
                             </div>
                         </div>
 
                         <table class="table table-sm table-reports" t-if="data['debit_credit'] == 1">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th class="text-end">Debit</th>
-                                    <th class="text-end">Credit</th>
-                                    <th class="text-end">Balance</th>
+                                    <th>Rubrique</th>
+                                    <th class="text-end">Débit</th>
+                                    <th class="text-end">Crédit</th>
+                                    <th class="text-end">Solde</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -57,8 +57,8 @@
                         <table class="table table-sm table-reports" t-if="not data['enable_filter'] and not data['debit_credit']">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th class="text-end">Balance</th>
+                                    <th>Rubrique</th>
+                                    <th class="text-end">Solde</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -76,8 +76,8 @@
                         <table class="table table-sm table-reports" t-if="data['enable_filter'] == 1 and not data['debit_credit']">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th class="text-end">Balance</th>
+                                    <th>Rubrique</th>
+                                    <th class="text-end">Solde</th>
                                     <th class="text-end"><span t-out="data['label_filter']"/></th>
                                 </tr>
                             </thead>

@@ -3,28 +3,28 @@ from dateutil.relativedelta import relativedelta
 from odoo import _, api, fields, models
 
 PERIODS = [
-    ('this_month', 'This Month'),
-    ('this_quarter', 'This Quarter'),
-    ('this_year', 'This Fiscal Year'),
-    ('last_month', 'Last Month'),
-    ('last_quarter', 'Last Quarter'),
-    ('last_year', 'Last Fiscal Year'),
-    ('custom', 'Custom'),
+    ('this_month', 'Ce mois-ci'),
+    ('this_quarter', 'Ce trimestre'),
+    ('this_year', 'Cet exercice fiscal'),
+    ('last_month', 'Le mois dernier'),
+    ('last_quarter', 'Le trimestre dernier'),
+    ('last_year', 'L\'exercice fiscal précédent'),
+    ('custom', 'Personnalisé'),
 ]
 
 
 class AccountTaxReport(models.TransientModel):
     _name = 'account.tax.report.wizard'
     _inherit = "account.common.report"
-    _description = 'Tax Report'
+    _description = 'Déclaration Fiscale / TVA'
 
-    period = fields.Selection(PERIODS, string='Period', default='this_month', required=True)
+    period = fields.Selection(PERIODS, string='Période', default='this_month', required=True)
     date_from = fields.Date(
-        string='Date From', required=True,
+        string='Date de début', required=True,
         default=lambda self: fields.Date.context_today(self).replace(day=1)
     )
     date_to = fields.Date(
-        string='Date To', required=True,
+        string='Date de fin', required=True,
         default=lambda self: fields.Date.context_today(self).replace(day=1) + relativedelta(months=1, days=-1)
     )
 

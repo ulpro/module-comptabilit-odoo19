@@ -8,14 +8,14 @@ class AccountReportGeneralLedger(models.TransientModel):
     _description = "General Ledger Report"
 
     initial_balance = fields.Boolean(
-        string='Include Initial Balances',
-        help='If you selected date, this field allow you to add a row '
-             'to display the amount of debit/credit/balance that precedes '
-             'the filter you have set.'
+        string='Inclure les soldes initiaux',
+        help='Si vous sélectionnez une date, ce champ vous permet d\'ajouter une ligne '
+             'pour afficher le montant débit/crédit/solde qui précède '
+             'le filtre que vous avez défini.'
     )
     sortby = fields.Selection(
-        [('sort_date', 'Date'), ('sort_journal_partner', 'Journal & Partner')],
-        string='Sort by', required=True, default='sort_date'
+        [('sort_date', 'Date'), ('sort_journal_partner', 'Journal & Partenaire')],
+        string='Trier par', required=True, default='sort_date'
     )
     journal_ids = fields.Many2many(
         'account.journal', 'account_report_general_ledger_journal_rel',

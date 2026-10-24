@@ -7,42 +7,42 @@
             <t t-call="web.internal_layout">
                 <div class="page o_om_report">
                         <t t-call="accounting_pdf_reports.report_style"/>
-                    <h2>General Ledger</h2>
+                    <h2>Grand Livre Général</h2>
 
                     <div id="informations" class="row mb-4">
                         <div class="col" t-if="data['date_from'] or data['date_to']">
-                            <strong>Period:</strong>
+                            <strong>Période :</strong>
                             <div>
                                 <t t-if="data['date_from'] and data['date_to']"><span t-out="data['date_from']" t-options="{'widget': 'date'}"/> - <span t-out="data['date_to']" t-options="{'widget': 'date'}"/></t>
-                                <t t-elif="data['date_from']">From <span t-out="data['date_from']" t-options="{'widget': 'date'}"/></t>
-                                <t t-else="">Until <span t-out="data['date_to']" t-options="{'widget': 'date'}"/></t>
+                                <t t-elif="data['date_from']">Du <span t-out="data['date_from']" t-options="{'widget': 'date'}"/></t>
+                                <t t-else="">Jusqu'au <span t-out="data['date_to']" t-options="{'widget': 'date'}"/></t>
                             </div>
                         </div>
                         <div class="col">
-                            <strong>Target Moves:</strong>
-                            <div t-if="data['target_move'] == 'all'">All Entries</div>
-                            <div t-if="data['target_move'] == 'posted'">All Posted Entries</div>
+                            <strong>Mouvements cibles :</strong>
+                            <div t-if="data['target_move'] == 'all'">Toutes les écritures</div>
+                            <div t-if="data['target_move'] == 'posted'">Toutes les écritures comptabilisées</div>
                         </div>
                         <div class="col">
-                            <strong>Sorted By:</strong>
+                            <strong>Trier par :</strong>
                             <div t-if="data['sortby'] == 'sort_date'">Date</div>
-                            <div t-if="data['sortby'] == 'sort_journal_partner'">Journal and Partner</div>
+                            <div t-if="data['sortby'] == 'sort_journal_partner'">Journal et Partenaire</div>
                         </div>
                         <div class="col">
-                            <strong>Display Account:</strong>
-                            <div t-if="data['display_account'] == 'all'">All accounts</div>
-                            <div t-if="data['display_account'] == 'movement'">With movements</div>
-                            <div t-if="data['display_account'] == 'not_zero'">With balance not equal to zero</div>
+                            <strong>Afficher les comptes :</strong>
+                            <div t-if="data['display_account'] == 'all'">Tous les comptes</div>
+                            <div t-if="data['display_account'] == 'movement'">Avec des mouvements</div>
+                            <div t-if="data['display_account'] == 'not_zero'">Avec un solde non nul</div>
                         </div>
                     </div>
                     <div class="o_om_info row mb-4">
                         <div class="col">
-                            <strong>Journals:</strong>
+                            <strong>Journaux :</strong>
                             <div t-out="', '.join([journal or '' for journal in print_journal])"/>
                         </div>
                         <t groups="analytic.group_analytic_accounting">
                             <div class="col" t-if="analytic_account_ids">
-                                <strong>Analytic Accounts:</strong>
+                                <strong>Comptes analytiques :</strong>
                                 <div t-out="', '.join([aa.name or '' for aa in analytic_account_ids])"/>
                             </div>
                         </t>
@@ -53,16 +53,16 @@
                             <tr>
                                 <th>Date</th>
                                 <th>JRNL</th>
-                                <th>Partner</th>
-                                <th>Ref</th>
-                                <th>Move</th>
+                                <th>Partenaire</th>
+                                <th>Réf</th>
+                                <th>Pièce</th>
                                 <t groups="analytic.group_analytic_accounting">
-                                    <th>Analytic Account</th>
+                                    <th>Compte analytique</th>
                                 </t>
-                                <th>Entry Label</th>
-                                <th class="text-end">Debit</th>
-                                <th class="text-end">Credit</th>
-                                <th class="text-end">Balance</th>
+                                <th>Libellé écriture</th>
+                                <th class="text-end">Débit</th>
+                                <th class="text-end">Crédit</th>
+                                <th class="text-end">Solde</th>
                                 <th class="text-end" groups="base.group_multi_currency">Currency</th>
                             </tr>
                         </thead>
