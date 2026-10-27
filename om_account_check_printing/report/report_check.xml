@@ -39,11 +39,11 @@
                         <table class="table table-sm" style="font-size: 9pt;">
                             <thead>
                                 <tr>
-                                    <th>Due Date</th>
+                                    <th>Date d'échéance</th>
                                     <th>Description</th>
-                                    <th class="text-end">Original Amount</th>
-                                    <th class="text-end">Balance Due</th>
-                                    <th class="text-end">Payment</th>
+                                    <th class="text-end">Montant initial</th>
+                                    <th class="text-end">Solde dû</th>
+                                    <th class="text-end">Paiement</th>
                                 </tr>
                             </thead>
                             <tbody>

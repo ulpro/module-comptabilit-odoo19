@@ -1,0 +1,28 @@
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Odoo specific
+*.log
+*.dump
+*.sql
+*.tar.gz
+*.zip
+
+# Virtualenv
+env/
+venv/
+ENV/
+.venv/
+
+# IDE & OS
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+Desktop.ini

@@ -5,18 +5,18 @@
         <field name="name">account.check.format.form</field>
         <field name="model">account.check.format</field>
         <field name="arch" type="xml">
-            <form string="Cheque Format">
+            <form string="Format de chèque">
                 <header>
-                    <button name="action_print_test" type="object" string="Test Print" class="btn-primary"/>
+                    <button name="action_print_test" type="object" string="Impression test" class="btn-primary"/>
                 </header>
                 <sheet>
-                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <widget name="web_ribbon" title="Archivé" bg_color="text-bg-danger" invisible="active"/>
                     <div class="oe_title">
                         <label for="name"/>
-                        <h1><field name="name" placeholder="e.g. Cheque book of the main bank"/></h1>
+                        <h1><field name="name" placeholder="ex. Chéquier de la banque principale"/></h1>
                     </div>
                     <group>
-                        <group string="Paper">
+                        <group string="Papier">
                             <field name="paper_size"/>
                             <field name="page_width" readonly="paper_size != 'custom'"/>
                             <field name="page_height" readonly="paper_size != 'custom'"/>
@@ -24,7 +24,7 @@
                             <field name="offset_y"/>
                             <field name="font_size"/>
                         </group>
-                        <group string="Values">
+                        <group string="Valeurs">
                             <field name="date_format"/>
                             <field name="amount_with_currency"/>
                             <field name="amount_stars"/>
@@ -39,17 +39,15 @@
                             <field name="active" invisible="1"/>
                         </group>
                     </group>
-                    <div class="o_horizontal_separator mt-4 mb-2 text-uppercase fw-bolder small">Preview</div>
+                    <div class="o_horizontal_separator mt-4 mb-2 text-uppercase fw-bolder small">Aperçu</div>
                     <p class="text-muted small mb-2">
-                        The test print with sample values, updated as you change the format. Print it to check the
-                        positions on a real cheque.
+                        L'impression test avec des valeurs d'exemple, mise à jour à mesure que vous modifiez le format. Imprimez-la pour vérifier les positions sur un vrai chèque.
                     </p>
                     <field name="preview_html" nolabel="1" readonly="1" class="d-block mb-3"/>
                     <notebook>
-                        <page string="Printed Fields" name="fields">
+                        <page string="Champs imprimés" name="fields">
                             <p class="text-muted">
-                                Positions are measured in millimetres from the top left corner of the page. Print a test
-                                on plain paper, hold it against a cheque and adjust the positions.
+                                Les positions sont mesurées en millimètres depuis le coin supérieur gauche de la page. Imprimez un test sur papier blanc, superposez-le sur votre chèque et ajustez les positions.
                             </p>
                             <field name="line_ids">
                                 <list editable="bottom">
@@ -70,11 +68,9 @@
                                 </list>
                             </field>
                         </page>
-                        <page string="MICR Line" name="micr">
+                        <page string="Ligne MICR" name="micr">
                             <p class="text-muted">
-                                Only for cheques printed on blank cheque paper with magnetic toner: the cheques of
-                                your bank already carry their MICR line. The routing number and the account number
-                                are taken from the bank account of the journal.
+                                Uniquement pour les chèques imprimés sur papier vierge avec toner magnétique : les chéquiers fournis par votre banque comportent déjà leur ligne MICR pré-imprimée. Le code banque et le numéro de compte sont issus du compte bancaire du journal.
                             </p>
                             <group>
                                 <group>
@@ -91,7 +87,7 @@
                                 </group>
                             </group>
                         </page>
-                        <page string="Stubs" name="stubs">
+                        <page string="Talons" name="stubs">
                             <group>
                                 <field name="print_stub"/>
                                 <field name="stub_top" invisible="not print_stub"/>
@@ -108,7 +104,7 @@
         <field name="name">account.check.format.list</field>
         <field name="model">account.check.format</field>
         <field name="arch" type="xml">
-            <list string="Cheque Formats">
+            <list string="Formats de chèques">
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
                 <field name="paper_size"/>
@@ -122,31 +118,31 @@
         <field name="name">account.check.format.search</field>
         <field name="model">account.check.format</field>
         <field name="arch" type="xml">
-            <search string="Cheque Formats">
+            <search string="Formats de chèques">
                 <field name="name"/>
                 <field name="country_ids"/>
-                <filter name="any_country" string="Any Country" domain="[('country_ids', '=', False)]"/>
+                <filter name="any_country" string="Tous pays" domain="[('country_ids', '=', False)]"/>
                 <separator/>
-                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+                <filter name="archived" string="Archivé" domain="[('active', '=', False)]"/>
                 <group>
-                    <filter name="group_paper_size" string="Paper" context="{'group_by': 'paper_size'}"/>
+                    <filter name="group_paper_size" string="Papier" context="{'group_by': 'paper_size'}"/>
                 </group>
             </search>
         </field>
     </record>
 
     <record id="action_check_format" model="ir.actions.act_window">
-        <field name="name">Cheque Formats</field>
+        <field name="name">Formats de chèques</field>
         <field name="res_model">account.check.format</field>
         <field name="view_mode">list,form</field>
         <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">Create a cheque format</p>
-            <p>Place the date, payee and amounts where the cheques of your bank expect them.</p>
+            <p class="o_view_nocontent_smiling_face">Créer un format de chèque</p>
+            <p>Placez la date, le bénéficiaire et les montants là où les chèques de votre banque les attendent.</p>
         </field>
     </record>
 
     <menuitem id="menu_check_format"
-              name="Cheque Formats"
+              name="Formats de chèques"
               parent="account.account_invoicing_menu"
               action="action_check_format"
               sequence="25"
