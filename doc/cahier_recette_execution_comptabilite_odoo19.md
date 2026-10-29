@@ -42,6 +42,7 @@
 | **Section 14** | Gestion & Impression des Chèques | CH-01 à CH-05 | ✅ **100 % VALIDÉ** |
 | **Section 15** | Sécurité, Groupes & Rôles | SE-01 à SE-08 | ✅ **100 % VALIDÉ (Groupes adaptables)** |
 | **Section 16** | Packaging & Déploiement Client | IN-01 à IN-08 | ✅ **100 % VALIDÉ (Pack 1-Click Client-Ready)** |
+| **Section 17** | Scénario Transversal de Bout en Bout | E2E-01 | ✅ **100 % VALIDÉ (Grand Livre Conforme)** |
 
 ---
 
@@ -952,7 +953,65 @@ La validation de la Section 16 a été convertie en une garantie de **prêt au d
 
 ## 15. Section 17 : Scénario Transversal de Bout en Bout (E2E-01)
 
-* Exécution d'un cycle comptable complet intégrant l'ensemble des modules validés de la suite.
+### A. Présentation du Scénario
+Le scénario transversal **E2E-01** vérifie la synchronisation et la cohérence de l'ensemble de la chaîne comptable :
+$$\text{Facture Vente (100k HT + TVA 15k)} \longrightarrow \text{Acompte 40k} \longrightarrow \text{Relevé Bancaire & Rapprochement 40k} \longrightarrow \text{Solde Caisse 35k} \longrightarrow \text{Grand Livre \& Solde 0}$$
+
+---
+
+### B. Déroulement Chronologique des Étapes Exécutées
+
+1. **Création & Validation de la Facture (`INV/2026/00012`) :**
+   * **Client :** `Partenaire CEMAC QA 001 Client` | **Date :** 28/10/2026
+   * **Ligne de vente :** Compte `400000 Ventes de produits`, montant HT de `100 000 FCFA`.
+   * **Taxe appliquée :** `15%` (Compte `251000 Taxe perçue` au crédit de `15 000 FCFA`).
+   * **Total TTC comptabilisé :** **`115 000 FCFA`** au débit du compte créance `121000 Compte client`.
+   * *Contrôle du verrouillage :* L'alerte de verrouillage de l'exercice 2026 (Section 12) a prouvé son efficacité avant réouverture pour test.
+
+2. **Premier Règlement Partiel (Acompte 40 000 FCFA) :**
+   * Enregistrement direct via le bouton **[Payer]** : pièce de paiement `PBNK1/2026/00005`.
+   * Débit Banque `101401` = `40 000 FCFA` | Crédit Client `121000` = `40 000 FCFA`.
+   * Statut facture : **Partiellement payé**, reste dû exact = **`75 000 FCFA`**.
+
+3. **Intégration du Relevé Bancaire & Rapprochement (40 000 FCFA) :**
+   * Importation du fichier CSV [`doc/releve_bancaire_e2e_40k.csv`](file:///c:/Users/ulrich/Downloads/om_account_accountant-19.0.1.3.0/doc/releve_bancaire_e2e_40k.csv).
+   * Ligne de relevé `BNK1/2026/00005` pour `40 000 FCFA` rapprochée et lettrée.
+   * Débit Banque `101401` = `40 000 FCFA` | Crédit Client `121000` = `40 000 FCFA`.
+   * Solde restant dû sur la facture réajusté à **`35 000 FCFA`**.
+
+4. **Règlement du Solde Final (35 000 FCFA) :**
+   * Paiement du reliquat par le journal Caisse : pièce `PCSH1/2026/00004` de `35 000 FCFA`.
+   * Débit Caisse `571000` = `35 000 FCFA` | Crédit Client `121000` = `35 000 FCFA`.
+   * **Statut de la facture : PAYÉ (Paid)** | **Solde restant dû : 0 FCFA**.
+
+---
+
+### C. Vérification sur le Rapport Officiel « Grand Livre Général » (PDF Odoo Mates)
+
+Le tirage du **Grand Livre Général** au 28/10/2026 confirme une traçabilité comptable irréprochable :
+
+| Compte Comptable | Libellé Compte | Total Débit | Total Crédit | Solde Net | Statut |
+| :--- | :--- | :---: | :---: | :---: | :---: |
+| **101401** | Banque | `80 000 FCFA` | `0 FCFA` | `+80 000 FCFA` | ✅ Encaissé en banque |
+| **571000** | Caisse Principale Siège | `35 000 FCFA` | `0 FCFA` | `+35 000 FCFA` | ✅ Encaissé en caisse |
+| **121000** | Compte client | `115 000 FCFA` | `115 000 FCFA` | **`0 FCFA`** | ✅ **100 % Soldé & Lettré** |
+| **251000** | Taxe perçue (15%) | `0 FCFA` | `15 000 FCFA` | `-15 000 FCFA` | ✅ Créditeur (TVA due) |
+| **400000** | Ventes de produits | `0 FCFA` | `100 000 FCFA` | `-100 000 FCFA` | ✅ Créditeur (Chiffre d'Affaires HT) |
+| **TOTAL** | **Vérification d'équilibre** | **`230 000 FCFA`** | **`230 000 FCFA`** | **`0 FCFA`** | ✅ **ÉGALITÉ ABSOLUE (Écart = 0)** |
+
+---
+
+### D. Conclusion de la Recette Globale de la Suite Comptable Odoo 19
+
+> [!IMPORTANT]
+> **Bilan Final de Recette : 100 % des 17 Sections Validées avec Succès.**
+> 
+> * **Comptabilité générale, facturation, trésorerie et rapprochements :** Opérationnels au centime près en devise locale FCFA (`XAF`).
+> * **Chèques, impression et calibrage :** Francisation complète et montants en lettres sans faille (`om_account_check_printing`).
+> * **Sécurité & Rôles :** Modèle hiérarchisé Odoo 19 prêt à l'emploi et adaptable à tout organigramme client.
+> * **Packaging & Code source :** Dépôt nettoyé (zéro `.pyc`), `.gitignore` standardisé, installation 1-Click et guide de déploiement client disponible dans [`doc/guide_deploiement_installation_client_odoo19.md`](file:///c:/Users/ulrich/Downloads/om_account_accountant-19.0.1.3.0/doc/guide_deploiement_installation_client_odoo19.md).
+>
+> **La suite logicielle est officiellement déclarée APTE AU DÉPLOIEMENT EN PRODUCTION CHEZ LES CLIENTS.**
 
 
 

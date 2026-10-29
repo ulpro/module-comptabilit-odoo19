@@ -11,6 +11,8 @@ __pycache__/
 *.sql
 *.tar.gz
 *.zip
+!demo_data/
+!demo_data/*.zip
 
 # Virtualenv
 env/
